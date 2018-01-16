@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jasmine": "^2.5.47",
+    "css-loader": "^0.28.8",
     "html-webpack-plugin": "^2.28.0",
     "jasmine-core": "^2.5.2",
     "karma": "^1.6.0",
@@ -20,8 +21,10 @@
     "karma-jasmine": "^1.1.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.3",
+    "style-loader": "^0.19.1",
     "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
+    "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
