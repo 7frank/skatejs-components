@@ -1,5 +1,5 @@
 {
-  "name": "skatejs-boilerplate",
+  "name": "@nk/core-components",
   "version": "1.0.0",
   "description": "",
   "main": "webpack.config.js",
@@ -30,6 +30,11 @@
   },
   "dependencies": {
     "skatejs": "^4.6.7",
-    "skatejs-web-components": "^0.0.1"
+    "skatejs-web-components": "^0.0.1",
+    "font-awesome": "^4.3.0",
+    "prop-types": "^15.5.8",
+
+    "@nk/keyboard-interactions":"0.1.0"
+
   }
 }
