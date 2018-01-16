@@ -4,10 +4,12 @@ import {Component, h, prop, props} from 'skatejs';
 import * as styles from './window.css';
 
 
-//  //,
+import  Icon from './icon';
+
 /**
  * TODO body should contain  vertical horizontal or absolute container maybe there are stable implementations out there
  *
+ * TODO how to use other components within render all   <nk-icon  size="lg" name="plus" ></nk-icon>
  *
  */
 
@@ -23,22 +25,33 @@ export class NkWindow extends Component<WindowProps> {
     }
 
 
+
     static get props() {
         return {
-            label: prop.string({attribute: true}),
+            label: prop.string({attribute: true})
         }
     }
 
     title: string;
     caption: string;
 
+    closeWindow(){
+
+        this.remove()
+
+    }
+
+
     renderCallback() {
+
+
         return <div class={styles.window + ' ' + styles.fillHeightOrMore}>
-            <div class={styles.head}>{this.title}
+            <div class={styles.head}> <span>{this.title}</span>
                 <span class={styles.headIcons}>
-                      <span class={styles.iconMaximize}>x</span>
-                      <span class={styles.iconMinimize}>x</span>
-                      <span class={styles.iconClose}>x</span>
+
+                      <span class={styles.iconMaximize}></span>
+                      <span class={styles.iconMinimize}></span>
+                      <span class={styles.iconClose} onclick={this.closeWindow.bind(this)}></span>
                 </span>
             </div>
             <div class={styles.body}>
