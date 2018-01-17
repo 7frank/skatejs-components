@@ -1,61 +1,51 @@
 
-
-.fillHeightOrMore {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-}
-
-.fillHeightOrMore > .body {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-}
-
-
 .window{
 
-    -position:absolute;
-    top: 10%;left:10%;
-    height: 300px;width:400px;
     border:0px solid white;
+
+    display: grid;
+    grid-gap: 0px;
+    grid-template-columns: 100%;
+    grid-template-rows: 1.5em auto;
+    grid-template-areas:
+            "header"
+            "content";
+
+    height:100% !important; /*guarantees that the height will fill the container*/
+
 }
 
+/*
+.window:focus .body ,*/
 
+.hidden
+{
+    visibility: hidden;
+
+}
+
+[focused] .body
+
+{
+
+
+    -webkit-box-shadow:inset 0px 0px 0px 1px lightgrey;
+    -moz-box-shadow:inset 0px 0px 0px 1px lightgrey;
+    box-shadow:inset 0px 0px 0px 1px lightgrey;
+ /*   -moz-box-shadow:0 5px 5px rgba(182, 182, 182, 0.75);
+    -webkit-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+    box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);*/
+
+}
 
 .head {
+
+    grid-area: header;
+
     color:white;
     background-color: slateblue;
     border:0;
-    height:1em;
+    -height:1em;
     padding:0.3em;
     font-weight: bold;
 
@@ -70,6 +60,14 @@
 }
 
 .body {
+
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    grid-area: content;
+
     background-color: ghostwhite;
     border:0;
     padding:0.3em;
