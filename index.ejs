@@ -1,11 +1,35 @@
 <html>
     <head>
+
+        <style>
+            #first{
+
+                position:absolute;
+                top: 10%;
+                left:10%;
+                -height: 300px;
+                width:900px;
+            }
+            #second{
+
+                position:absolute;
+                top: 40%;
+                left:40%;
+                height: 300px;
+                width:900px;
+            }
+
+
+        </style>
+
+
     </head>
     <body>
-      <nk-window style="top:5%; left:5%;" title="first window">
+      <nk-window id="first" title="first window">
        <nk-hotkey-list></nk-hotkey-list>
       </nk-window>
-       <nk-window title="second window">
+
+       <nk-window id="second"  title="second window">
        <nk-icon  size="lg" name="plus" >icon not working</nk-icon>
         <s-button label="hey"></s-button>
       </nk-window>

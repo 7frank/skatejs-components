@@ -8,7 +8,10 @@ module.exports = {
         path: path.resolve(__dirname, './dist')
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx']
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        alias: {
+            'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+        }
     },
     module: {
         rules: [

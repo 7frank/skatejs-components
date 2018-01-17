@@ -49,8 +49,27 @@ export class HotkeyList extends Component<HotkeyListProps> {
 }
 
 
-    renderCallback() {
+        renderedCallback(){
 
+                console.log(HotkeyList.is,"rendered");
+
+        }
+
+
+        //TODO expose adding hotkeys via a htmlelement
+
+    addHotkeys()
+    {
+
+        Hotkeys.apply(null,arguments);
+
+        console.log("TODO redraw ")
+
+    }
+
+
+    renderCallback() {
+        console.log(HotkeyList.is,"render");
 
         const tags = [
             {

@@ -20,7 +20,7 @@ export default class CSSClassHelper {
         var el = this.el
         if (el.classList)
             el.classList.add(className)
-        else if (!hasClass(el, className))
+        else if (!this.hasClass( className))
             el.className += " " + className;
     }
 
@@ -29,7 +29,7 @@ export default class CSSClassHelper {
         var el = this.el
         if (el.classList)
             el.classList.remove(className)
-        else if (hasClass(el, className)) {
+        else if (this.hasClass( className)) {
             var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
             el.className = el.className.replace(reg, ' ');
         }
