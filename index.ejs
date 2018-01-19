@@ -22,6 +22,30 @@
 
         </style>
 
+        <script>
+            function addHotkeyListener()
+            {
+
+                var hkList=document.querySelector("nk-hotkey-list")
+
+
+                hkList.addHotkeys("open dialog", "ctrl+space", function(){
+
+console.log("blub")
+                })
+
+
+                var l=document.querySelector("#first")
+                //l.insertAdjacentHTML("afterend", "<nk-hotkey-list></nk-hotkey-list>")
+
+                l.innerHTML="<nk-hotkey-list></nk-hotkey-list>"
+
+
+
+            }
+
+
+        </script>
 
     </head>
     <body>
@@ -31,7 +55,8 @@
 
        <nk-window id="second"  title="second window">
        <nk-icon  size="lg" name="plus" >icon not working</nk-icon>
-        <s-button label="hey"></s-button>
+        <s-button label="addHotkeyListener" onclick="addHotkeyListener()"></s-button>
+
       </nk-window>
 
     </body>

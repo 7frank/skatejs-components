@@ -60,18 +60,18 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
     addHotkeys()
     {
-
         Hotkeys.apply(null,arguments);
+    }
 
-        console.log("TODO redraw ")
+    getHK()
+    {
+        return {registered:getRegistered};
 
     }
 
-
     renderCallback() {
-        console.log(HotkeyList.is,"render");
 
-        const tags = [
+        const demoTags = [
             {
                 combo: "ctrl+s", action: "save File", handler: function () {
                 console.log("hello hotkeylist", arguments)
@@ -88,6 +88,19 @@ export class HotkeyList extends Component<HotkeyListProps> {
             }, description: "more sample stuff"
             },
         ];
+
+
+       for (let entry of demoTags)
+           Hotkeys (entry.action, entry.combo, entry.handler)
+//-------------------------
+        var registered=getRegistered()
+
+        //TODO
+        //var tags=Object.values(registered)
+        var tags=[]
+        for (let i in registered)
+        tags.push(registered[i])
+
         const allowDeletion = this.deletion ? 'deletion' : '';
         const tagElements = tags.map(t => {
             const tagContent = allowDeletion ? <span class='deletion'>{t.action}</span> :  <span>{t.action}</span>;
