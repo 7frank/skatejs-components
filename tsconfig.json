@@ -6,5 +6,8 @@
         "sourceMap": true,
         "jsxFactory": "h",
         "jsx": "react"
-    }
+    },
+    "include": [
+    "src/**/*.d.ts"
+]
 }

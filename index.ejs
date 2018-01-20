@@ -19,8 +19,18 @@
                 width:900px;
             }
 
+            #third{
+    border:2px solid black;
+                position:absolute;
+                top: 56%;
+                left:60%;
+                height: 300px;
+                width:900px;
+            }
+
 
         </style>
+
 
         <script>
             function addHotkeyListener()
@@ -31,7 +41,13 @@
 
                 hkList.addHotkeys("open dialog", "ctrl+space", function(){
 
-console.log("blub")
+                    document.body.append(document.createElement("nk-window"))
+                  //TODO below should work also.. or so it seems
+                    /*document.querySelector("body").insertAdjacentHTML("beforeend",`
+                    <nk-window id="third" title="first window">
+                     <nk-hotkey-list></nk-hotkey-list>
+                     </nk-window>
+                  `)*/
                 })
 
 
@@ -54,7 +70,7 @@ console.log("blub")
       </nk-window>
 
        <nk-window id="second"  title="second window">
-       <nk-icon  size="lg" name="plus" >icon not working</nk-icon>
+
         <s-button label="addHotkeyListener" onclick="addHotkeyListener()"></s-button>
 
       </nk-window>
