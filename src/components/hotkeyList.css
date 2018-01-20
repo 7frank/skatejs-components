@@ -1,15 +1,14 @@
 
-
 .list {
-    display:table;
+    display: table;
 }
 
 .row {
-    display:table-row;
+    display: table-row;
 }
-.row  > *
-{
-    display:table-cell;
+
+.row > * {
+    display: table-cell;
 
 }
 

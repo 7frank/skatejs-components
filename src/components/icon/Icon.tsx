@@ -5,12 +5,13 @@
 import 'skatejs-web-components';
 import {Component, h, prop, props} from 'skatejs';
 
+import * as styles from "./icon.css"
+
 
 //import PropTypes from 'prop-types';
 
 
-
-export interface IconProps{
+export interface IconProps {
     name: string,
     className?: string,
     size?: 'lg' | '2x' | '3x' | '4x' | '5x',
@@ -25,10 +26,21 @@ export interface IconProps{
 
 
 export default class Icon extends Component<IconProps> {
+    label: string;
+    name: string;
+    size: string;
+    rotate: string;
+    flip: string;
+    spin: string;
+    fixedWidth: string;
+    stack: string;
+    inverse: string;
+    pulse: string;
+    className: string;
+
     static get is() {
         return 'nk-icon'
     }
-
 
     static get props() {
         return {
@@ -47,58 +59,74 @@ export default class Icon extends Component<IconProps> {
     }
 
 
-
-
     renderCallback() {
 
-        const {
-            name,
-            size,
-            rotate,
-            flip,
-            spin,
-            fixedWidth,
-            stack,
-            inverse,
-            pulse,
-            className,
-            ...props
-        } = this._props;
+       //  TODO until the icon component can handle the import itself leave this here
+
+        var link=document.createElement("link");
+        link.rel='stylesheet';
+        link.type='text/css';
+        link.href='node_modules/font-awesome/css/font-awesome.css';
+        document.head.insertAdjacentElement("beforeend",link);
 
 
-        let classNames = `fa fa-${name}`;
-        if (size) {
-            classNames = `${classNames} fa-${size}`;
+
+
+        /*
+                const {
+                    name,
+                    size,
+                    rotate,
+                    flip,
+                    spin,
+                    fixedWidth,
+                    stack,
+                    inverse,
+                    pulse,
+                    className,
+                    ...props
+                } = this._props;
+        */
+
+        let classNames = `fa fa-${this.name}`;
+        if (this.size) {
+            classNames = `${classNames} fa-${this.size}`;
         }
-        if (rotate) {
-            classNames = `${classNames} fa-rotate-${rotate}`;
+        if (this.rotate) {
+            classNames = `${classNames} fa-rotate-${this.rotate}`;
         }
-        if (flip) {
-            classNames = `${classNames} fa-flip-${flip}`;
+        if (this.flip) {
+            classNames = `${classNames} fa-flip-${this.flip}`;
         }
-        if (fixedWidth) {
+        if (this.fixedWidth) {
             classNames = `${classNames} fa-fw`;
         }
-        if (spin) {
+        if (this.spin) {
             classNames = `${classNames} fa-spin`;
         }
-        if (pulse) {
+        if (this.pulse) {
             classNames = `${classNames} fa-pulse`;
         }
 
-        if (stack) {
-            classNames = `${classNames} fa-stack-${stack}`;
+        if (this.stack) {
+            classNames = `${classNames} fa-stack-${this.stack}`;
         }
-        if (inverse) {
+        if (this.inverse) {
             classNames = `${classNames} fa-inverse`;
         }
 
-        if (className) {
-            classNames = `${classNames} ${className}`;
+        if (this.className) {
+            classNames = `${classNames} ${this.className}`;
         }
 
+
+        classNames += " " + styles.resetHeight.toString();
+
+
         //{...props}
-        return <div  className={classNames} />;
+        return <div className={classNames}></div>;
+
+
     }
 }
 

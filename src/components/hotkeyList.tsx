@@ -3,7 +3,7 @@ import {Component, h, prop, props} from 'skatejs';
 
 import * as styles from './hotkeyList.css'
 
-import {getRegistered,Hotkeys,showHotkeyList} from  "@nk/keyboard-interactions"
+import {getRegistered, Hotkeys, showHotkeyList} from "@nk/keyboard-interactions"
 
 export interface HotkeyListProps {
     label: string;
@@ -11,6 +11,9 @@ export interface HotkeyListProps {
 }
 
 export class HotkeyList extends Component<HotkeyListProps> {
+    label: string;
+    deletion: boolean;
+
     static get is() {
         return 'nk-hotkey-list'
     }
@@ -22,50 +25,34 @@ export class HotkeyList extends Component<HotkeyListProps> {
         }
     }
 
-    label: string;
-    deletion: boolean;
-
-
     onTagClick(arg) {
 
 
-      /*  Hotkeys('show help', 'h', function () {
-            showHotkeyList();
-        });*/
+        /*  Hotkeys('show help', 'h', function () {
+              showHotkeyList();
+          });*/
+alert("TODO")
+//TODO Mousetrap.unbind('a', callback2)
 
-        console.log("registered",this,getRegistered())
-
-        Hotkeys(arg.action, arg.combo,function(e){
+      /*  Hotkeys(arg.action, arg.combo, function (e) {
             e.stopPropagation()
             e.preventDefault()
 
             arg.handler(e)
 
-        })
+        })*/
 
 
-
-
-}
-
-
-        renderedCallback(){
-
-                console.log(HotkeyList.is,"rendered");
-
-        }
-
-
-        //TODO expose adding hotkeys via a htmlelement
-
-    addHotkeys()
-    {
-        Hotkeys.apply(null,arguments);
     }
 
-    getHK()
-    {
-        return {registered:getRegistered};
+    //TODO expose adding hotkeys via a htmlelement
+
+    addHotkeys() {
+        Hotkeys.apply(null, arguments);
+    }
+
+    getHK() {
+        return {registered: getRegistered};
 
     }
 
@@ -73,43 +60,34 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
         const demoTags = [
             {
-                combo: "ctrl+s", action: "save File", handler: function () {
+                combo: "ctrl+,", action: "save File", handler: function () {
                 console.log("hello hotkeylist", arguments)
-            }, description: "a sample entry for the hotkeylist"
-            },
-            {
-                combo: "ctrl+alt+#", action: "custom action", handler: function () {
-                console.log("hello hotkeylist2", arguments)
-            }, description: "another sample entry"
-            },
-            {
-                combo: "ctrl+a", action: "select all", handler: function () {
-                console.log("hello hotkeylist3", arguments)
-            }, description: "more sample stuff"
-            },
+            }.bind(this),
+                description: "a sample entry for the hotkeylist"
+            }
         ];
 
 
-       for (let entry of demoTags)
-           Hotkeys (entry.action, entry.combo, entry.handler)
+        for (let entry of demoTags)
+            Hotkeys(entry.action, entry.combo, entry.handler)
 //-------------------------
-        var registered=getRegistered()
+        var registered = getRegistered()
 
         //TODO
         //var tags=Object.values(registered)
-        var tags=[]
+        var tags = []
         for (let i in registered)
-        tags.push(registered[i])
+            tags.push(registered[i])
 
         const allowDeletion = this.deletion ? 'deletion' : '';
         const tagElements = tags.map(t => {
-            const tagContent = allowDeletion ? <span class='deletion'>{t.action}</span> :  <span>{t.action}</span>;
+            const tagContent = allowDeletion ? <span class='deletion'>{t.action}</span> : <span>{t.action}</span>;
 
-            return <div  class={styles.row}>
+            return <div class={styles.row}>
                 {tagContent}
                 <input value={t.combo}></input>
                 <span class="description">{t.description}</span>
-                <button  onclick={()=>this.onTagClick(t)}>bind combo</button>
+               <nk-icon size="lg" name="close"  onclick={() => this.onTagClick(t)}></nk-icon>
             </div>;
         });
 
@@ -119,7 +97,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
                 rows.push(new Button());
             }*/
 
-        return <div class={styles.list} >{tagElements}</div>
+        return <div class={styles.list}>{tagElements}</div>
     }
 }
 

@@ -1,40 +1,37 @@
 
-.window{
+.window {
 
-    border:0px solid white;
+    border: 0px solid white;
 
     display: grid;
     grid-gap: 0px;
     grid-template-columns: 100%;
     grid-template-rows: 1.5em auto;
-    grid-template-areas:
-            "header"
-            "content";
+    grid-template-areas: "header" "content";
 
-    height:100% !important; /*guarantees that the height will fill the container*/
+    height: 100% !important; /*guarantees that the height will fill the container*/
+
+    min-width: 80px;
+    min-height: 45px;
 
 }
 
 /*
 .window:focus .body ,*/
 
-.hidden
-{
+.hidden {
     visibility: hidden;
 
 }
 
-[focused] .body
+[focused] .body {
 
-{
-
-
-    -webkit-box-shadow:inset 0px 0px 0px 1px lightgrey;
-    -moz-box-shadow:inset 0px 0px 0px 1px lightgrey;
-    box-shadow:inset 0px 0px 0px 1px lightgrey;
- /*   -moz-box-shadow:0 5px 5px rgba(182, 182, 182, 0.75);
-    -webkit-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
-    box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);*/
+    -webkit-box-shadow: inset 0px 0px 0px 1px lightgrey;
+    -moz-box-shadow: inset 0px 0px 0px 1px lightgrey;
+    box-shadow: inset 0px 0px 0px 1px lightgrey;
+    /*   -moz-box-shadow:0 5px 5px rgba(182, 182, 182, 0.75);
+       -webkit-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+       box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);*/
 
 }
 
@@ -42,11 +39,10 @@
 
     grid-area: header;
 
-    color:white;
+    color: white;
     background-color: slateblue;
-    border:0;
-    -height:1em;
-    padding:0.3em;
+    border: 0;
+    padding: 0.3em;
     font-weight: bold;
 
     -webkit-touch-callout: none; /* iOS Safari */
@@ -54,13 +50,13 @@
     -khtml-user-select: none; /* Konqueror HTML */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                     supported by Chrome and Opera */
 
 }
 
 .body {
-
 
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -69,27 +65,27 @@
     grid-area: content;
 
     background-color: ghostwhite;
-    border:0;
-    padding:0.3em;
+    border: 0;
+    padding: 0.3em;
 }
-
 
 .headIcons {
     background-color: transparent;
-    border:0;
+    border: 0;
     float: right;
 }
 
-.headIcons *{
- margin:0.1em;
-    min-height:1em;
-    min-width:1em;
-    max-height:1em;
-    max-width:1em;
+.headIcons > * {
+    margin-left: 0.4em;
+    margin-top: 0.1em;
+    min-height: 1.2em;
+    min-width: 1.2em;
+    max-height: 1.2em;
+    max-width: 1.2em;
+    font-size: 0.8em;
     display: inline-block;
+
 }
-
-
 
 .iconMaximize {
     background-color: blue;

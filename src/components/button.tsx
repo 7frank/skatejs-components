@@ -1,24 +1,26 @@
 import 'skatejs-web-components';
-import { Component, h, prop, props } from 'skatejs';
+import {Component, h, prop, props} from 'skatejs';
 
 export interface ButtonProps {
-  label: string;
+    label: string;
 }
 
 export class Button extends Component<ButtonProps> {
-  static get is() { return 's-button' }
+    label: string;
 
-  static get props() {
-    return {
-      label: prop.string({ attribute: true }),
+    static get is() {
+        return 's-button'
     }
-  }
 
-  label: string;
+    static get props() {
+        return {
+            label: prop.string({attribute: true}),
+        }
+    }
 
-  renderCallback() {
-    return <button>{this.label}</button>
-  }
+    renderCallback() {
+        return <button>{this.label}</button>
+    }
 }
 
 customElements.define(Button.is, Button);
