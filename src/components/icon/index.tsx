@@ -4,9 +4,6 @@
  */
 
 
-//FIXME import
-//import 'font-awesome/css/font-awesome.css';
-
 import Icon from './Icon';
 //import IconStack from './IconStack';
 

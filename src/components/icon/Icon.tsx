@@ -7,6 +7,7 @@ import {Component, h, prop, props} from 'skatejs';
 
 import * as styles from "./icon.css"
 
+import 'font-awesome/css/font-awesome.css';
 
 //import PropTypes from 'prop-types';
 
@@ -60,18 +61,6 @@ export default class Icon extends Component<IconProps> {
 
 
     renderCallback() {
-
-       //  TODO until the icon component can handle the import itself leave this here
-
-        var link=document.createElement("link");
-        link.rel='stylesheet';
-        link.type='text/css';
-        link.href='node_modules/font-awesome/css/font-awesome.css';
-        document.head.insertAdjacentElement("beforeend",link);
-
-
-
-
         /*
                 const {
                     name,

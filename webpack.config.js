@@ -5,7 +5,11 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, './dist')
+        path: path.resolve(__dirname, './dist'),
+        library: "NKCoreComponents",
+        libraryTarget: 'umd',
+
+        umdNamedDefine: true
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -16,6 +20,17 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
+            /**
+             * Include vendor css files globally without parsing them.
+             */
+            {
+                test: /\.css$/,
+                include: path.join(__dirname, 'node_modules'),
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'src/components'),
