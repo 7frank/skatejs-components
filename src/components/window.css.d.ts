@@ -1,5 +1,6 @@
 export const window: string;
 export const hidden: string;
+export const maximized: string;
 export const body: string;
 export const head: string;
 export const headIcons: string;

@@ -6,7 +6,7 @@
 
                 position:absolute;
                 top: 10%;
-                left:10%;
+                left:5%;
                 -height: 300px;
                 width:900px;
             }
@@ -14,7 +14,7 @@
 
                 position:absolute;
                 top: 40%;
-                left:40%;
+                left:60%;
                 height: 300px;
                 width:900px;
             }
@@ -35,6 +35,8 @@
         <script>
             function addHotkeyListener()
             {
+                NKCore.addHotkeys("action","ctrl+shift+space",console.warn)
+
 
                 var hkList=document.querySelector("nk-hotkey-list")
 
@@ -49,6 +51,11 @@
                      </nk-window>
                   `)*/
                 })
+
+                hkList.addHotkeys("do something else", "ctrl+space", function(){
+                    alert("bla")
+                })
+
 
 
                 var l=document.querySelector("#first")

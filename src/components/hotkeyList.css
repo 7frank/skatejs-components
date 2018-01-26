@@ -3,12 +3,48 @@
     display: table;
 }
 
+.section {
+    border-bottom: 0px;
+    border-left: 0px;
+    border-right: 0px;
+
+}
+.section > legend{
+    font-size:75%;
+
+}
+
 .row {
     display: table-row;
+    margin-bottom: 0.1em;
 }
 
 .row > * {
     display: table-cell;
+    margin-right: 0.2em;
+    margin-bottom: 0.1em;
+}
+
+.row > input:focus {
+    -webkit-box-shadow: 0.1em 0.1em 0.1em 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0.1em 0.1em 0.1em 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0.1em 0.1em 0.1em 0px rgba(0, 0, 0, 0.75);
+
+}
+
+.error {
+    background-color: red;
+    text-decoration: line-through;
+
+}
+
+.row > .description {
+    font-size: 50%;
+
+}
+
+.row > .description:hover {
+    font-size: 90%;
 
 }
 

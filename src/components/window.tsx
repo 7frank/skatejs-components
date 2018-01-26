@@ -2,7 +2,8 @@ import 'skatejs-web-components';
 import {Component, h, prop, props} from 'skatejs';
 
 import * as styles from './window.css';
-import * as Draggable from 'Draggable';
+
+
 
 import * as  Resizable from 'resizable';
 import CSSClassHelper from "./CSSClassHelper"
@@ -16,17 +17,36 @@ import "./icon"
  * TODO have an optional footer
  * TODO have option to add custom icons in header
  * TODO "minimized" should trigger the toggleMinimizeWindow function in its set-method
-
+ * FIXME in chrome, shadow dom does things differently and styles won't be rendered for elements the way we import them currently
  */
+
+
+enum WindowAction {
+    Minimize,
+    Maximize,
+    Close
+}
+
+
+export enum WindowClosingAction {
+    Remove,
+    Hide
+}
+
+const ClosingActionProp =prop.create<WindowClosingAction>({});
+
 
 
 export interface WindowProps {
     title: string;
     caption: string;
-    closingAction: string;
+    closingAction: WindowClosingAction;
     minimized: boolean;
+    maximized: boolean;
     useColor: boolean;
 }
+
+
 
 
 /**
@@ -38,8 +58,9 @@ export interface WindowProps {
 export class NkWindow extends Component<WindowProps> {
     title: string;
     caption: string;
-    closingAction: string;
+    closingAction: WindowClosingAction;
     minimized: boolean;
+    maximized: boolean;
     useColor: boolean;
 
     static get is() {
@@ -49,11 +70,14 @@ export class NkWindow extends Component<WindowProps> {
     static get props() {
         return {
             label: prop.string({attribute: true}),
-            closingAction: prop.string({attribute: true, default: "remove"}),
+            closingAction:ClosingActionProp({attribute: true, default: WindowClosingAction.Remove}),
             minimized: prop.boolean({
                 attribute: true, default: false, set: function () {
 
                 }
+            }),
+            maximized: prop.boolean({
+                attribute: true, default: false
             }),
             useColor: prop.boolean({attribute: true, default: false})
         }
@@ -68,7 +92,7 @@ export class NkWindow extends Component<WindowProps> {
      */
 
     addHeaderIconFontAwesome(icon: string, handler: (e: Event) => void, what: string = "click") {
-        return this.addHeaderIcon('<nk-icon size="lg" name='+icon+' ></nk-icon>',handler,what);
+        return this.addHeaderIcon('<nk-icon name=' + icon + ' ></nk-icon>', handler, what);
 
     }
 
@@ -90,7 +114,41 @@ export class NkWindow extends Component<WindowProps> {
 
     }
 
+
+    /**
+     * Set the window state like minimized, maximized, closed.
+     *
+     * @param {WindowAction} action
+     * @param {boolean} bState - sets action to true or false
+     */
+
+    setWindowAction(action: WindowAction, bState: boolean) {
+
+        switch (action) {
+
+            case WindowAction.Maximize: {
+                if (this.minimized) this.toggleMinimizeWindow(this.minimized != this.minimized)
+                this.toggleMaximizedWindow(bState);
+                break;
+            }
+
+            case WindowAction.Minimize: {
+                if (this.maximized) this.toggleMaximizedWindow(this.maximized != this.maximized)
+                this.toggleMinimizeWindow(bState);
+                break;
+            }
+
+            case WindowAction.Close: {
+                this.closeWindow();
+                break;
+            }
+
+        }
+    }
+
+
     toggleMinimizeWindow(bMinimize: boolean) {
+
 
         var bodyCssSelector = "." + styles.body.toString();
         var hiddenClass = styles.hidden.toString();
@@ -102,12 +160,24 @@ export class NkWindow extends Component<WindowProps> {
 
     }
 
+    toggleMaximizedWindow(bMaximize: boolean) {
+
+
+        var maximizedClass = styles.maximized.toString();
+
+        var classHelper = new CSSClassHelper(this);
+
+        bMaximize ? classHelper.addClass(maximizedClass) : classHelper.removeClass(maximizedClass);
+
+
+    }
+
+
     closeWindow() {
 
-
-        if (this.closingAction == "remove")
+        if (this.closingAction == WindowClosingAction.Remove)
             this.remove();
-        else if (this.closingAction == "hide")
+        else if (this.closingAction == WindowClosingAction.Hide)
             this.setAttribute("visible", "false");
         else
             throw new Error("unsupported closing action");
@@ -123,27 +193,35 @@ export class NkWindow extends Component<WindowProps> {
         super.renderedCallback();
 
 
+     /*
+        var bs = "." + styles.body.toString();
+
+        const bhandle: HTMLElement  = this.shadowRoot.querySelector(bs);
+        var scrollbar=new PerfectScrollbar(bhandle)
+
+        */
+
+
         var headSelector = "." + styles.head.toString();
 
         var mHandle = this.shadowRoot.querySelector(headSelector);
-
-        new Draggable(this, {
-            handle: mHandle,
-            grid: 10,
-            onDrag: function () {
-
-
-            }
-
-        });
 
 
         var resizable = new Resizable(this, {
             //within: 'parent',
             handles: 's, se, e',
             threshold: 10,
-            draggable: false
+            draggable: {
+                handle: mHandle
+            },
+            resize:function(){
+               // scrollbar.update()
+            console.log("resized")
+            }
         });
+
+
+
 
     }
 
@@ -155,12 +233,14 @@ export class NkWindow extends Component<WindowProps> {
         for (let i in queryResult) {
             queryResult[i].removeAttribute("focused")
         }
-        ;
 
-        this.parentNode.appendChild(this);
+        if (this.parentNode.lastChild != this)
+            this.parentNode.appendChild(this);
         this.setAttribute("focused", "true");
-        this.setAttribute("tabindex", "1");
-        this.focus();
+        // this.setAttribute("tabindex", "1");
+        if (document.activeElement != this)
+            this.focus();
+
     }
 
     renderCallback() {
@@ -169,16 +249,17 @@ export class NkWindow extends Component<WindowProps> {
         return <div class={styles.window} onclick={this.bringToFront.bind(this)}>
             <div class={styles.head}><span>{this.title}</span>
                 <span class={styles.headIcons}>
-                      <nk-icon size="lg" name="window-maximize"
+                       <nk-icon name="window-minimize" class={this.useColor ? styles.iconMinimize : ""}
+                                onclick={() => this.setWindowAction(WindowAction.Minimize, this.minimized = !this.minimized)}></nk-icon>
+                      <nk-icon name="window-maximize"
+                               onclick={() => this.setWindowAction(WindowAction.Maximize, this.maximized = !this.maximized)}
                                class={this.useColor ? styles.iconMaximize : ""}></nk-icon>
-                      <nk-icon size="lg" name="window-minimize" class={this.useColor ? styles.iconMinimize : ""}
-                               onclick={() => this.toggleMinimizeWindow(this.minimized = !this.minimized)}></nk-icon>
-                      <nk-icon size="lg" name="close" class={this.useColor ? styles.iconClose : ""}
+                      <nk-icon name="close" class={this.useColor ? styles.iconClose : ""}
                                onclick={this.closeWindow.bind(this)}></nk-icon>
                 </span>
             </div>
             <div class={styles.body}>
-               <slot class={styles.body}>{this.caption}</slot>
+                <slot class={styles.body}>{this.caption}</slot>
             </div>
 
         </div>

@@ -7,7 +7,9 @@ import {Component, h, prop, props} from 'skatejs';
 
 import * as styles from "./icon.css"
 
+//does work partially
 import 'font-awesome/css/font-awesome.css';
+
 
 //import PropTypes from 'prop-types';
 

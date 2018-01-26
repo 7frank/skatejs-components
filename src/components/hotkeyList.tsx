@@ -1,18 +1,55 @@
 import 'skatejs-web-components';
-import {Component, h, prop, props} from 'skatejs';
+import {Component, h, prop, props, emit} from 'skatejs';
+import * as keycode from "keycode"
 
 import * as styles from './hotkeyList.css'
 
-import {getRegistered, Hotkeys, showHotkeyList} from "@nk/keyboard-interactions"
+import * as _ from 'lodash'
+
+import {getRegistered, Hotkeys, isBound, rebind} from "@nk/keyboard-interactions"
 
 export interface HotkeyListProps {
     label: string;
     deletion: boolean;
+    entries: object[];
+}
+
+
+function getActionForInput(input)
+{
+
+   return  input.parentElement.firstChild.innerText
+}
+
+function onInputPress(event) {
+
+    event.preventDefault();
+
+    if (event.keyCode >= 16 && event.keyCode <= 18) return;
+
+    var c = keycode.names[event.keyCode];
+    if (event.shiftKey == true)
+        c = "Shift+" + c;
+    if (event.altKey == true)
+        c = "Alt+" + c;
+    if (event.ctrlKey == true)
+        c = "Ctrl+" + c;
+
+
+    this.value = c;
+
+    if (!isBound(c))
+        rebind(getActionForInput(this), c);
+
+
+    return false;
+
 }
 
 export class HotkeyList extends Component<HotkeyListProps> {
     label: string;
     deletion: boolean;
+    entries: object[];
 
     static get is() {
         return 'nk-hotkey-list'
@@ -20,85 +57,86 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
     static get props() {
         return {
-            label: prop.string({attribute: true}),
+            label: prop.string({attribute: true, default: " entries in hotkey list"}),
             deletion: prop.boolean({attribute: true}),
+            entries: prop.array({attribute: true, default: []}),
         }
     }
 
     onTagClick(arg) {
 
 
-        /*  Hotkeys('show help', 'h', function () {
-              showHotkeyList();
-          });*/
-alert("TODO")
-//TODO Mousetrap.unbind('a', callback2)
-
-      /*  Hotkeys(arg.action, arg.combo, function (e) {
-            e.stopPropagation()
-            e.preventDefault()
-
-            arg.handler(e)
-
-        })*/
+        alert("TODO")
+        //TODO Mousetrap.unbind('a', callback2)
 
 
     }
 
-    //TODO expose adding hotkeys via a htmlelement
+    addHotkeys(...args) {
+        Hotkeys.apply(null, args);
+    };
 
-    addHotkeys() {
-        Hotkeys.apply(null, arguments);
-    }
-
-    getHK() {
-        return {registered: getRegistered};
-
-    }
 
     renderCallback() {
 
-        const demoTags = [
-            {
-                combo: "ctrl+,", action: "save File", handler: function () {
-                console.log("hello hotkeylist", arguments)
-            }.bind(this),
-                description: "a sample entry for the hotkeylist"
-            }
-        ];
+        Hotkeys.onChange(function () {
+            console.log("TODO hotkeylist needs update");
+
+            //TODO find out why altering the label will result in proper display of one ... although altering entries should do the same ..
+            this.label = "  entr" + ((this.entries.length == 1) ? "y" : "ies") + " in hotkey list";
+            this.entries.push("foo")
+        }.bind(this));
 
 
-        for (let entry of demoTags)
-            Hotkeys(entry.action, entry.combo, entry.handler)
-//-------------------------
-        var registered = getRegistered()
+        //-------------------------
+        //get registered key combinations and group them by category
+        var tagGroups=_(_.values( getRegistered())).groupBy("category").value()
 
-        //TODO
-        //var tags=Object.values(registered)
-        var tags = []
-        for (let i in registered)
-            tags.push(registered[i])
-
-        const allowDeletion = this.deletion ? 'deletion' : '';
-        const tagElements = tags.map(t => {
+        /**
+         *
+         * @param t - an object that contains some options
+         * @returns {any} - the partial dom entries
+         */
+        var createRow= t => {
             const tagContent = allowDeletion ? <span class='deletion'>{t.action}</span> : <span>{t.action}</span>;
 
             return <div class={styles.row}>
                 {tagContent}
-                <input value={t.combo}></input>
-                <span class="description">{t.description}</span>
-               <nk-icon size="lg" name="close"  onclick={() => this.onTagClick(t)}></nk-icon>
+                <input value={t.combo} onkeydown={onInputPress} className={(t.error) ? styles.error : ""}
+                       title={(t.error) ? t.error : ""}></input>
+                {t.combo!=t.defaults?<nk-icon class="default" name="undo" title={t.defaults}></nk-icon>:""}
+                <nk-icon name="close" onclick={() => this.onTagClick(t)}></nk-icon>
+                <span class={styles.description}>{t.description}</span>
             </div>;
-        });
+        }
+
+        /**
+         *
+         * @param tags - an array of option objects
+         * @param key - the object key, in our case the category name
+         * @returns {any} - the partial dom entries
+         */
+
+        var createSection= (tags,key) => {
+
+            const tagElements =  tags.map(createRow);
+            return <fieldset class={styles.section}>
+                <legend>{key}</legend> {tagElements}
+            </fieldset>
+        }
 
 
-        /*    var rows = [];
-            for (var i = 0; i < 5; i++) {
-                rows.push(new Button());
-            }*/
+        const allowDeletion = this.deletion ? 'deletion' : '';
+        //const tagElements =  tags.map(createRow);
+        const tagSections =  _.values(_.mapValues(tagGroups,createSection));
 
-        return <div class={styles.list}>{tagElements}</div>
+        return <div class={styles.list}>
+            <div>{this.entries.length + " " + this.label}</div> {tagSections}</div>
     }
 }
+
+export function addHotkeys(...args) {
+    Hotkeys.apply(null, args);
+};
 
 customElements.define(HotkeyList.is, HotkeyList);

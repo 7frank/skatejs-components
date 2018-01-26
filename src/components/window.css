@@ -1,4 +1,15 @@
 
+/* a local scope would be nice but :host seems not to work atm. */
+nk-window
+{
+    background-color: #f8f8ff99;
+
+    min-width: 80px;
+    min-height: 45px;
+
+
+}
+
 .window {
 
     border: 0px solid white;
@@ -11,8 +22,6 @@
 
     height: 100% !important; /*guarantees that the height will fill the container*/
 
-    min-width: 80px;
-    min-height: 45px;
 
 }
 
@@ -20,8 +29,18 @@
 .window:focus .body ,*/
 
 .hidden {
-    visibility: hidden;
+    /* visibility: hidden; */
+    display:none;
 
+}
+
+.maximized
+{
+    top: 0px !important;
+    left: 0px !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
 }
 
 [focused] .body {
@@ -54,35 +73,44 @@
     /* Non-prefixed version, currently
                                      supported by Chrome and Opera */
 
+/* to keep icon bar in place */
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    justify-content: space-between;
+    word-break: break-all;
+
 }
 
 .body {
-
+    position:relative;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 
     grid-area: content;
 
-    background-color: ghostwhite;
     border: 0;
     padding: 0.3em;
+    /*overflow:auto;*/
 }
 
 .headIcons {
     background-color: transparent;
     border: 0;
-    float: right;
+   /* float: right;*/
+    white-space: nowrap;
+
 }
 
 .headIcons > * {
-    margin-left: 0.4em;
+    margin-left: 0.2em;
     margin-top: 0.1em;
-    min-height: 1.2em;
+   /* min-height: 1.2em;
     min-width: 1.2em;
     max-height: 1.2em;
     max-width: 1.2em;
-    font-size: 0.8em;
+    font-size: 0.8em; */
     display: inline-block;
 
 }
