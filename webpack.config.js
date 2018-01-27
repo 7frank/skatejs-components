@@ -1,6 +1,9 @@
-
+const Webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
     entry: './src/index.ts',
@@ -17,6 +20,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
+
             'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
         }
     },
@@ -77,13 +81,18 @@ module.exports = {
         ]
     },
     plugins: [
+        new Webpack.ProvidePlugin({
+
+            jQuery: 'jquery'
+        }),
         new HtmlWebpackPlugin({
             template: './index.ejs'
         }),
         new BundleAnalyzerPlugin({
             analyzerMode:"static",
             openAnalyzer:false
-        })
+        }),
+
     ],
     devtool: "inline-source-map",
 }

@@ -15,10 +15,9 @@ export interface HotkeyListProps {
 }
 
 
-function getActionForInput(input)
-{
+function getActionForInput(input) {
 
-   return  input.parentElement.firstChild.innerText
+    return input.parentElement.firstChild.innerText
 }
 
 function onInputPress(event) {
@@ -90,25 +89,37 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
         //-------------------------
         //get registered key combinations and group them by category
-        var tagGroups=_(_.values( getRegistered())).groupBy("category").value()
+        var tagGroups = _(_.values(getRegistered())).groupBy("category").value()
 
         /**
          *
          * @param t - an object that contains some options
          * @returns {any} - the partial dom entries
          */
-        var createRow= t => {
-            const tagContent = allowDeletion ? <span class='deletion'>{t.action}</span> : <span>{t.action}</span>;
+        var createRow = t => {
 
             return <div class={styles.row}>
-                {tagContent}
+                <span class={styles.action}>{t.action}</span>
                 <input value={t.combo} onkeydown={onInputPress} className={(t.error) ? styles.error : ""}
                        title={(t.error) ? t.error : ""}></input>
-                {t.combo!=t.defaults?<nk-icon class="default" name="undo" title={t.defaults}></nk-icon>:""}
+                {t.combo != t.defaults ? <nk-icon class="default" name="undo" title={t.defaults}></nk-icon> : <span></span>}
                 <nk-icon name="close" onclick={() => this.onTagClick(t)}></nk-icon>
                 <span class={styles.description}>{t.description}</span>
             </div>;
         }
+
+
+        var createHeader = t => {
+
+            return <div class={styles.row+" "+styles.rowHeader }>
+                <span>action</span>
+                <span>combo</span>
+                <span></span>
+                <span></span>
+                <span>description</span>
+            </div>;
+        }
+
 
         /**
          *
@@ -117,21 +128,23 @@ export class HotkeyList extends Component<HotkeyListProps> {
          * @returns {any} - the partial dom entries
          */
 
-        var createSection= (tags,key) => {
+        var createSection = (tags, key) => {
 
-            const tagElements =  tags.map(createRow);
+            const tagElements = tags.map(createRow);
+            const tagElementHeader = createHeader(tags[0]);
             return <fieldset class={styles.section}>
-                <legend>{key}</legend> {tagElements}
+                <legend>{key}</legend>
+                {tagElementHeader}
+                {tagElements}
             </fieldset>
         }
 
 
-        const allowDeletion = this.deletion ? 'deletion' : '';
-        //const tagElements =  tags.map(createRow);
-        const tagSections =  _.values(_.mapValues(tagGroups,createSection));
+        const tagSections = _.values(_.mapValues(tagGroups, createSection));
 
         return <div class={styles.list}>
-            <div>{this.entries.length + " " + this.label}</div> {tagSections}</div>
+            <div>{this.entries.length + " " + this.label}</div>
+            {tagSections}</div>
     }
 }
 

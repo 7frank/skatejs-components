@@ -1,12 +1,9 @@
-
 /* a local scope would be nice but :host seems not to work atm. */
-nk-window
-{
+nk-window {
     background-color: #f8f8ff99;
 
     min-width: 80px;
     min-height: 45px;
-
 
 }
 
@@ -22,20 +19,40 @@ nk-window
 
     height: 100% !important; /*guarantees that the height will fill the container*/
 
+}
+
+/* customize scrollbar plugin*/
+.ps__rail-x {
+    bottom: 2px !important;
 
 }
+
+.ps__rail-y {
+    right: 2px !important;
+
+}
+
+/* FIXME not working width and height
+.ps__thumb-x {
+    height: 3px !important;
+}
+
+.ps__thumb-y {
+    width: 3px !important;
+}
+*/
+
 
 /*
 .window:focus .body ,*/
 
 .hidden {
     /* visibility: hidden; */
-    display:none;
+    display: none;
 
 }
 
-.maximized
-{
+.maximized {
     top: 0px !important;
     left: 0px !important;
     width: 100% !important;
@@ -73,7 +90,7 @@ nk-window
     /* Non-prefixed version, currently
                                      supported by Chrome and Opera */
 
-/* to keep icon bar in place */
+    /* to keep icon bar in place */
     display: flex;
     flex-wrap: nowrap;
     overflow: hidden;
@@ -83,7 +100,7 @@ nk-window
 }
 
 .body {
-    position:relative;
+    position: relative;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -98,7 +115,7 @@ nk-window
 .headIcons {
     background-color: transparent;
     border: 0;
-   /* float: right;*/
+    /* float: right;*/
     white-space: nowrap;
 
 }
@@ -106,11 +123,11 @@ nk-window
 .headIcons > * {
     margin-left: 0.2em;
     margin-top: 0.1em;
-   /* min-height: 1.2em;
-    min-width: 1.2em;
-    max-height: 1.2em;
-    max-width: 1.2em;
-    font-size: 0.8em; */
+    /* min-height: 1.2em;
+     min-width: 1.2em;
+     max-height: 1.2em;
+     max-width: 1.2em;
+     font-size: 0.8em; */
     display: inline-block;
 
 }

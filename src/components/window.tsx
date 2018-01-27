@@ -10,6 +10,28 @@ import CSSClassHelper from "./CSSClassHelper"
 
 import "./icon"
 
+/*
+import "jquery.scrollbar/jquery.scrollbar.css"
+import "jquery.scrollbar"
+*/
+
+
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
+
+/*
+
+
+import "simple-scrollbar"
+import "simple-scrollbar/simple-scrollbar.css"
+
+
+declare global {
+    const SimpleScrollbar: any
+}
+
+ */
+
 /**
  * NOTE to use other web-components improt them and check that you define them either via "window.d.ts"  file or  see https://github.com/Microsoft/TypeScript/issues/15449 for inline global
  *
@@ -193,14 +215,22 @@ export class NkWindow extends Component<WindowProps> {
         super.renderedCallback();
 
 
-     /*
+
         var bs = "." + styles.body.toString();
 
         const bhandle: HTMLElement  = this.shadowRoot.querySelector(bs);
-        var scrollbar=new PerfectScrollbar(bhandle)
+          var scrollbar=new PerfectScrollbar(bhandle)
 
-        */
 
+
+     //   SimpleScrollbar.initEl(bhandle);
+
+/*
+        //NOTE: Typecasting to any to suppress warnings
+        const instance = jQuery(bhandle) as any;
+        instance.scrollbar()
+*/
+        //---------------------------------------
 
         var headSelector = "." + styles.head.toString();
 
@@ -215,7 +245,7 @@ export class NkWindow extends Component<WindowProps> {
                 handle: mHandle
             },
             resize:function(){
-               // scrollbar.update()
+                scrollbar.update()
             console.log("resized")
             }
         });
@@ -258,7 +288,7 @@ export class NkWindow extends Component<WindowProps> {
                                onclick={this.closeWindow.bind(this)}></nk-icon>
                 </span>
             </div>
-            <div class={styles.body}>
+            <div ss-container class={styles.body}>
                 <slot class={styles.body}>{this.caption}</slot>
             </div>
 

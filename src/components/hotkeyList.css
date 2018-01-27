@@ -14,6 +14,10 @@
 
 }
 
+.rowHeader {
+    font-size: 75%;
+}
+
 .row {
     display: table-row;
     margin-bottom: 0.1em;
@@ -21,7 +25,8 @@
 
 .row > * {
     display: table-cell;
-    margin-right: 0.2em;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
     margin-bottom: 0.1em;
 }
 
@@ -40,11 +45,19 @@
 
 .row > .description {
     font-size: 50%;
+    vertical-align:top;
+
 
 }
 
 .row > .description:hover {
     font-size: 90%;
 
+
 }
+.row > .action {
+    white-space: nowrap;
+}
+
+
 
