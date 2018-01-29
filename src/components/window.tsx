@@ -105,6 +105,12 @@ export class NkWindow extends Component<WindowProps> {
         }
     }
 
+    public static getProps()
+    {
+        return NkWindow.props
+    }
+
+
     /**
      *
      * @param {string} icon - fa icon string without the "fa-" prefix {@link http://fontawesome.io/} latest versions of icons might not be supported
@@ -219,6 +225,8 @@ export class NkWindow extends Component<WindowProps> {
         var bs = "." + styles.body.toString();
 
         const bhandle: HTMLElement  = this.shadowRoot.querySelector(bs);
+
+
           var scrollbar=new PerfectScrollbar(bhandle)
 
 
@@ -273,7 +281,7 @@ export class NkWindow extends Component<WindowProps> {
 
     }
 
-    renderCallback() {
+    renderCallback(el) {
 
 
         return <div class={styles.window} onclick={this.bringToFront.bind(this)}>
@@ -288,7 +296,7 @@ export class NkWindow extends Component<WindowProps> {
                                onclick={this.closeWindow.bind(this)}></nk-icon>
                 </span>
             </div>
-            <div ss-container class={styles.body}>
+            <div ss-container class={styles.body}>{el}
                 <slot class={styles.body}>{this.caption}</slot>
             </div>
 
