@@ -1,5 +1,5 @@
 import {addHotkeys} from "./hotkeyList"
-
+import {logHotkeyList}from "@nk/keyboard-interactions"
 
 document.addEventListener("DOMContentLoaded", function () {
     addDemohandlers()
@@ -12,6 +12,12 @@ var lorem="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam non
 export function addDemohandlers() {
     const demoTags = [
         {
+            combo: "f1", action: "dump keys to console", handler: function () {
+            logHotkeyList()
+        }.bind(this),
+            description: lorem
+        },
+        {
             combo: "ctrl+,", action: "save File", handler: function () {
             console.log("hello hotkeylist", arguments)
         }.bind(this),
@@ -19,7 +25,7 @@ export function addDemohandlers() {
         },
         {
             category:"test",
-            combo: "ctrl+ä", action: "doSomething", handler: function () {
+            combo: ["ctrl+ä","shift+z"], action: "doSomething", handler: function () {
             console.log("hello hotkeylist", arguments)
         }.bind(this),
             description: "a sample entry for the hotkeylist"

@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jasmine": "^2.5.47",
+    "@types/jasmine": "^2.8.6",
     "@types/jquery": "^3.3.0",
     "css-loader": "^0.28.9",
     "file-loader": "^1.1.6",
@@ -32,7 +32,7 @@
     "postcss-loader": "^2.0.10",
     "style-loader": "^0.19.1",
     "ts-loader": "^2.3.7",
-    "typescript": "^2.4.2",
+    "typescript": "^2.6.2",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^0.6.2",
     "webpack": "^2.4.1",
