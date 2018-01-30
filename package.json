@@ -19,6 +19,7 @@
     "css-loader": "^0.28.9",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.28.0",
+    "isomorphic-style-loader": "^4.0.0",
     "jasmine-core": "^2.5.2",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -31,16 +32,18 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.10",
     "style-loader": "^0.19.1",
+    "to-string-loader": "^1.1.5",
     "ts-loader": "^2.3.7",
     "typescript": "^2.6.2",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^0.6.2",
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.9.2",
-    "webpack-dev-server": "^2.4.2"
+    "webpack-dev-server": "^2.4.2",
+    "wp-plugin-watch-offset": "https://github.com/ff0000-ad-tech/wp-plugin-watch-offset/tarball/master"
   },
   "dependencies": {
-    "font-awesome": "^4.3.0",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jquery-ui-dist": "^1.12.1",
     "keycode": "^2.1.9",

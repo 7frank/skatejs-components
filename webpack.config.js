@@ -1,7 +1,7 @@
 const Webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const WpPluginWatchOffset = require('wp-plugin-watch-offset');
 
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -27,12 +27,14 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
-            /**
+
+           /**
              * Include vendor css files globally without parsing them.
              */
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'node_modules'),
+               // exclude: path.join(__dirname, 'node_modules/font-awesome'),
                 use: [
                     'style-loader',
                     {
@@ -49,9 +51,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'src/components'),
+                //exclude: path.join(__dirname, 'node_modules'),
                 use: [
                     {
-                        loader: 'style-loader',
+                        loader: 'isomorphic-style-loader',
                         options: {
                             //insertInto: '#host>#root'
                         }
@@ -60,11 +63,19 @@ module.exports = {
                         loader: 'typings-for-css-modules-loader',
                         options: {
                             modules: true,
-                            namedExport: true
+                            namedExport: true,
+                            camelCase:true
                         }
                     }
                 ]
             },
+          /*  {
+                test: /\.css$/,
+                include: [path.join(__dirname, 'node_modules')],
+                use: ['to-string-loader','css-loader']
+
+
+            },*/
             { test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]' },
             { test: /\.woff$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff&name=public/fonts/[name].[ext]' },
             { test: /\.woff2$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff2&name=public/fonts/[name].[ext]' },
@@ -81,6 +92,9 @@ module.exports = {
         ]
     },
     plugins: [
+        // prevents generated files from triggering watch cycle
+        //
+        new WpPluginWatchOffset(),
         new Webpack.ProvidePlugin({
 
             jQuery: 'jquery'
