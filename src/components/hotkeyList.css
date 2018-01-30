@@ -1,6 +1,11 @@
 
 .list {
-    /*display: table;*/
+
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;
+
 }
  
 
@@ -46,17 +51,21 @@
 }
 
 .row > .description {
-    font-size: 50%;
+    font-size: 80%;
     vertical-align:top;
-
+    transition: all 0.05s linear;
 
 }
 
+/*
 .row > .description:hover {
     font-size: 90%;
 
 
 }
+*/
+
+
 .row > .action {
     white-space: nowrap;
 }

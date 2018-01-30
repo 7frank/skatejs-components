@@ -6,11 +6,51 @@ import * as styles from './hotkeyList.css'
 
 import * as _ from 'lodash'
 
-import {getRegistered, Hotkeys, isBound, rebind, resetActionCombosToDefault,addComboForAction} from "@nk/keyboard-interactions"
+import {
+    getRegistered,
+    Hotkeys,
+    isBound,
+    rebind,
+    resetActionCombosToDefault,
+    addComboForAction
+} from "@nk/keyboard-interactions"
+
+
+
+
+
+export interface ICombo
+{
+    combo: string;
+    type?:string;
+    stopPropagation: boolean;
+    preventDefault: boolean;
+    error: string;
+}
+
+/**
+ * Interface for the hotkey parameters
+ *
+ * @interface ICombo
+ *
+ * @param
+ *
+ */
+
+
+export interface IOptions {
+    combo:ICombo[]|string|string[];
+    action: string;
+    title?: string;
+    handler(): any;
+    category?: string;
+    description?: string;
+    selector?: string;
+    target?: HTMLElement;
+}
 
 export interface HotkeyListProps {
     label: string;
-    deletion: boolean;
     entries: object[];
     details: DetailMode;
 }
@@ -27,19 +67,31 @@ enum DetailMode {
 const DetailModeProp = prop.create<DetailMode>({});
 
 
-function onInputPress(event, id, action) {
+function onInputPress(event, id:number, action:string) {
 
     event.preventDefault();
 
     if (event.keyCode >= 16 && event.keyCode <= 18) return;
 
-    var c = keycode.names[event.keyCode];
+
+    var c=null;
+    var code=event.keyCode||event.which;
+    if (event.keyCode)
+    c = keycode.names[code];
+
+    if (!c && event.key)
+        c = event.key
+
+    if (!c) console.warn("keyboard event: could not detect key")
+
     if (event.shiftKey == true)
         c = "Shift+" + c;
     if (event.altKey == true)
         c = "Alt+" + c;
     if (event.ctrlKey == true)
         c = "Ctrl+" + c;
+    if (event.metaKey == true)
+        c = "Meta+" + c;
 
 
     event.target.value = c;
@@ -57,7 +109,6 @@ function onInputPress(event, id, action) {
 
 export class HotkeyList extends Component<HotkeyListProps> {
     label: string;
-    deletion: boolean;
     entries: object[];
     details: DetailMode;
 
@@ -68,13 +119,12 @@ export class HotkeyList extends Component<HotkeyListProps> {
     static get props() {
         return {
             label: prop.string({attribute: true}),
-            deletion: prop.boolean({attribute: true}),
             entries: prop.array({attribute: true, default: []}),
             details: DetailModeProp({attribute: true, default: DetailMode.Normal}),
         }
     }
 
-    resetActions(action) {
+    resetActions(action:string):void {
 
         resetActionCombosToDefault(action)
 
@@ -82,13 +132,15 @@ export class HotkeyList extends Component<HotkeyListProps> {
     }
 
 
-    addComboForAction(action)
-    {
+    addComboForAction(action:string):void {
 
         addComboForAction(action)
 
     }
 
+    /**
+     * @inheritDoc Hotkeys
+     */
     addHotkeys(...args) {
         Hotkeys.apply(null, args);
     };
@@ -108,11 +160,19 @@ export class HotkeyList extends Component<HotkeyListProps> {
         var tagGroups = _(_.values(getRegistered())).groupBy("category").value()
 
 
+        /**
+         * creates a single input element.
+         *
+         * @param t
+         * @param key
+         * @param action
+         * @returns {any}
+         */
         var createInputItem = (t, key, action) => {
 
             var icon = "fa-keyboard-o";
 
-            //TODO evaluate keyboard/mouse/touch/gestures there mihgt be omre options and a plugin system could help etc.
+            //TODO evaluate keyboard/mouse/touch/gestures there might be more options and a plugin system could help etc.
 
 
             return <div class={styles.inputWrapper}>
@@ -138,7 +198,6 @@ export class HotkeyList extends Component<HotkeyListProps> {
         var createRow = t => {
 
 
-
             var item = t.combo.map((tag, key) => createInputItem(tag, key, t.action));
 
 
@@ -146,7 +205,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
                 <span class={styles.action}>{t.action}</span>
                 <div>{item}
                     <button class={styles.addEntry} onclick={() => this.addComboForAction(t.action)}>
-                        <nk-icon name="plus"  ></nk-icon>
+                        <nk-icon name="plus"></nk-icon>
                     </button>
                 </div>
                 {!isArrayEqual(t.combo, t.defaults) ? <nk-icon class="default" name="undo"
@@ -199,6 +258,9 @@ export class HotkeyList extends Component<HotkeyListProps> {
     }
 }
 
+/**
+ * {@link @nk/keyboard-interactions#Hotkeys()}
+ */
 export function addHotkeys(...args) {
     Hotkeys.apply(null, args);
 };

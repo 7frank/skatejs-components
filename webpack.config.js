@@ -92,6 +92,12 @@ module.exports = {
             analyzerMode:"static",
             openAnalyzer:false
         }),
+        //TODO use below or check out HtmlWebpackPlugin options minify
+     /*   new Webpack.optimize.UglifyJsPlugin({
+            include: /\.min\.js$/,
+            minimize: true
+        })*/
+
 
     ],
     devtool: "inline-source-map",

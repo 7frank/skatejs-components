@@ -109,6 +109,8 @@ nk-window {
 
     border: 0;
     padding: 0.3em;
+
+
     /*overflow:auto;*/
 }
 
@@ -146,4 +148,3 @@ nk-window {
     background-color: red;
 
 }
-
