@@ -3,6 +3,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WpPluginWatchOffset = require('wp-plugin-watch-offset');
 
+const StatsDump = require('./StatsPlugin');
+
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
@@ -108,7 +110,7 @@ module.exports = {
             include: /\.min\.js$/,
             minimize: true
         })*/
-
+       StatsDump
 
     ],
     devtool: "inline-source-map",
