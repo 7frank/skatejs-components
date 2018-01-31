@@ -283,8 +283,11 @@ export class NkWindow extends Component<WindowProps> {
 
     renderCallback(el) {
 
+        
+        var css:any=styles
 
         return <div class={styles.window} onclick={this.bringToFront.bind(this)}>
+            <style>{css._getCss()}</style>
             <div class={styles.head}><span>{this.title}</span>
                 <span class={styles.headIcons}>
                        <nk-icon name="window-minimize" class={this.useColor ? styles.iconMinimize : ""}

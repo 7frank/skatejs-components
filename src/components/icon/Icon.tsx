@@ -8,8 +8,8 @@ import {Component, h, prop, props} from 'skatejs';
 import * as styles from "./icon.css"
 
 //does work partially
-import 'font-awesome/css/font-awesome.css';
-
+import   "font-awesome/css/font-awesome.css";
+//import  * as fa from  "font-awesome/css/font-awesome.css";
 
 //import PropTypes from 'prop-types';
 
@@ -112,6 +112,7 @@ export default class Icon extends Component<IconProps> {
 
 
         classNames += " " + styles.resetHeight.toString();
+
 
 
         //{...props}

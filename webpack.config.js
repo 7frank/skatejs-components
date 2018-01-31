@@ -27,7 +27,18 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
+           /* {
 
+                test: /font-awesome\.css$/,
+                include: [path.join(__dirname, 'node_modules/font-awesome')],
+                use: [
+                    'to-string-loader',
+                    { loader: 'css-loader', options: { importLoaders: 1 } },
+                    'postcss-loader'
+                ]
+
+
+            },*/
            /**
              * Include vendor css files globally without parsing them.
              */
@@ -50,7 +61,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                include: path.join(__dirname, 'src/components'),
+                include: [path.join(__dirname, 'src/components')],
                 //exclude: path.join(__dirname, 'node_modules'),
                 use: [
                     {
@@ -69,26 +80,12 @@ module.exports = {
                     }
                 ]
             },
-          /*  {
-                test: /\.css$/,
-                include: [path.join(__dirname, 'node_modules')],
-                use: ['to-string-loader','css-loader']
 
-
-            },*/
             { test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]' },
             { test: /\.woff$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff&name=public/fonts/[name].[ext]' },
             { test: /\.woff2$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff2&name=public/fonts/[name].[ext]' },
             { test: /\.[ot]tf$/, loader: 'url-loader?limit=2000000&mimetype=application/octet-stream&name=public/fonts/[name].[ext]' },
             { test: /\.eot$/, loader: 'url-loader?limit=2000000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[name].[ext]' }
-            /*{
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader'
-            }*/
         ]
     },
     plugins: [

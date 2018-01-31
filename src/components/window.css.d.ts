@@ -1,4 +1,6 @@
 export const window: string;
+export const psRailX: string;
+export const psRailY: string;
 export const hidden: string;
 export const maximized: string;
 export const body: string;

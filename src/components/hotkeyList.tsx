@@ -252,7 +252,10 @@ export class HotkeyList extends Component<HotkeyListProps> {
         const tagSections = _.values(_.mapValues(tagGroups, createSection));
 
 
-        return <div class={styles.list}>
+
+        var css:any=styles
+
+        return <div class={styles.list}> <style>{css._getCss()}</style>
             <div>{this.label}</div>
             {tagSections}</div>
     }
