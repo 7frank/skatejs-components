@@ -17,7 +17,13 @@ import "jquery.scrollbar"
 
 
 import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+
+/**
+* TODO and another case of .. explicite declare, which we'd like to avoid. so for now a simple string instead of import,declare will do
+ **/
+//import 'perfect-scrollbar/css/perfect-scrollbar.css';
+//import scrollbarCSS = require('./perfect-scrollbar.css.txt');
+var scrollbarCSS=`.ps__rail-x,.ps__rail-y{display:none;opacity:0;position:absolute}.ps{overflow:hidden!important;overflow-anchor:none;-ms-overflow-style:none;touch-action:auto;-ms-touch-action:auto}.ps__rail-x{transition:background-color .2s linear,opacity .2s linear;-webkit-transition:background-color .2s linear,opacity .2s linear;height:15px;bottom:0}.ps__rail-y{transition:background-color .2s linear,opacity .2s linear;-webkit-transition:background-color .2s linear,opacity .2s linear;width:15px;right:0}.ps--active-x>.ps__rail-x,.ps--active-y>.ps__rail-y{display:block;background-color:transparent}.ps--focus>.ps__rail-x,.ps--focus>.ps__rail-y,.ps--scrolling-x>.ps__rail-x,.ps--scrolling-y>.ps__rail-y,.ps:hover>.ps__rail-x,.ps:hover>.ps__rail-y{opacity:.6}.ps__rail-x:focus,.ps__rail-x:hover,.ps__rail-y:focus,.ps__rail-y:hover{background-color:#eee;opacity:.9}.ps__thumb-x,.ps__thumb-y{background-color:#aaa;border-radius:6px;position:absolute}.ps__thumb-x{transition:background-color .2s linear,height .2s ease-in-out;-webkit-transition:background-color .2s linear,height .2s ease-in-out;height:6px;bottom:2px}.ps__thumb-y{transition:background-color .2s linear,width .2s ease-in-out;-webkit-transition:background-color .2s linear,width .2s ease-in-out;width:6px;right:2px}.ps__rail-x:focus>.ps__thumb-x,.ps__rail-x:hover>.ps__thumb-x{background-color:#999;height:11px}.ps__rail-y:focus>.ps__thumb-y,.ps__rail-y:hover>.ps__thumb-y{background-color:#999;width:11px}@supports (-ms-overflow-style:none){.ps{overflow:auto!important}}@media screen and (-ms-high-contrast:active),(-ms-high-contrast:none){.ps{overflow:auto!important}}`
 
 /*
 
@@ -268,8 +274,12 @@ export class NkWindow extends Component<WindowProps> {
 
         var queryResult = document.querySelectorAll("[focused]");
 
+        if (queryResult.length>0)
         for (let i in queryResult) {
+           if (queryResult[i].removeAttribute) //TODO chrome has trouble finding method..
             queryResult[i].removeAttribute("focused")
+
+
         }
 
         if (this.parentNode.lastChild != this)
@@ -286,8 +296,9 @@ export class NkWindow extends Component<WindowProps> {
         
         var css:any=styles
 
+
         return <div class={styles.window} onclick={this.bringToFront.bind(this)}>
-            <style>{css._getCss()}</style>
+            <style>{css._getCss()}</style>  <style>{scrollbarCSS}</style>
             <div class={styles.head}><span>{this.title}</span>
                 <span class={styles.headIcons}>
                        <nk-icon name="window-minimize" class={this.useColor ? styles.iconMinimize : ""}

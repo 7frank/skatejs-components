@@ -1,5 +1,14 @@
 /* a local scope would be nice but :host seems not to work atm. */
+
 nk-window {
+    background-color: #f8f8ff99;
+
+    min-width: 80px;
+    min-height: 45px;
+
+}
+
+:host{
     background-color: #f8f8ff99;
 
     min-width: 80px;

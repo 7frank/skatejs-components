@@ -1,5 +1,17 @@
 /* same as nk-window b.c. of an issue with inheritance*/
+
+
+
 nk-hotkey-dialog {
+    background-color: #f8f8ff99;
+    min-width: 80px;
+    min-height: 45px;
+
+}
+
+
+
+:host {
     background-color: #f8f8ff99;
     min-width: 80px;
     min-height: 45px;

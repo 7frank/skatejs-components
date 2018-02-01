@@ -6,7 +6,8 @@ import {NkWindow} from "./window";
 import {HotkeyList, HotkeyListProps} from "./hotkeyList";
 
 
-import "./hotkey-dialog.css"
+//import "./hotkey-dialog.css"
+import * as styles from './hotkey-dialog.css';
 
 
 /**
@@ -72,8 +73,11 @@ export class HotkeyDialog extends NkWindow {
     }
 
     renderCallback() {
+        var css:any=styles
 
-        return super.renderCallback(<nk-hotkey-list id="hotkeys"></nk-hotkey-list>)
+
+
+        return super.renderCallback( [<style>{css._getCss()}</style>,<nk-hotkey-list id="hotkeys"></nk-hotkey-list>])
 
     }
 }

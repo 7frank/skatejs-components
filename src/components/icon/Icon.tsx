@@ -90,8 +90,13 @@ export default class Icon extends Component<IconProps> {
            return
        }
 
+
+
       //  let classNames = `fa fa-${this.name}`;
         let classNames =""+fa.fa+" "+fa[ iconName];
+
+
+        //TODO alter code below so it will find the classes again
         if (this.size) {
             classNames = `${classNames} fa-${this.size}`;
         }
