@@ -25,9 +25,30 @@ import * as _ from "lodash"
 
 
 
-import   "font-awesome/css/font-awesome.css";
+//import   "font-awesome/css/font-awesome.css";
 //import  * as fa from  "font-awesome/css/font-awesome.css";
 import  * as  fa from  "./font-awesome/css/font-awesome.css";
+
+/*  manually inserting a style tag for "fa" to at least decrease the package size a bit for now */
+document.addEventListener("DOMContentLoaded", function () {
+
+
+
+    var css:any=fa;
+    var css =css._getCss()
+      var   head = document.head || document.getElementsByTagName('head')[0],
+       style:any = document.createElement('style');
+
+    style.type = 'text/css';
+    if (style.styleSheet){
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+});
+
 
 //import PropTypes from 'prop-types';
 
