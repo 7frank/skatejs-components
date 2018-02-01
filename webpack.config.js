@@ -14,7 +14,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist'),
-       // publicPath: 'api/node_modules/@nk/core-components/dist/',
+        // publicPath: 'api/node_modules/@nk/core-components/dist/',
         //publicPath: './',
         library: "NKCore",
         libraryTarget: 'umd',
@@ -31,50 +31,50 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
-           /*{
+            /*{
 
-                test: /font-awesome\.css$/,
-                include: [
-                       path.resolve(__dirname, 'node_modules/font-awesome')
-                ],
-                use: [
-                    {
-                        loader: 'isomorphic-style-loader',
-                        options: {
-                            //insertInto: '#host>#root'
-                        }
-                    },
-                    {
-                        loader: 'typings-for-css-modules-loader',
-                        options: {
-                            modules: true,
-                            namedExport: true,
-                            camelCase:true
-                        }
-                    }
-                   // "style-loader",//'to-string-loader',
-                   // { loader: 'css-loader', options: { importLoaders: 1 } },
-                   // 'postcss-loader'
-                ]
-
-
-            },*/
+                 test: /font-awesome\.css$/,
+                 include: [
+                        path.resolve(__dirname, 'node_modules/font-awesome')
+                 ],
+                 use: [
+                     {
+                         loader: 'isomorphic-style-loader',
+                         options: {
+                             //insertInto: '#host>#root'
+                         }
+                     },
+                     {
+                         loader: 'typings-for-css-modules-loader',
+                         options: {
+                             modules: true,
+                             namedExport: true,
+                             camelCase:true
+                         }
+                     }
+                    // "style-loader",//'to-string-loader',
+                    // { loader: 'css-loader', options: { importLoaders: 1 } },
+                    // 'postcss-loader'
+                 ]
 
 
-           /**
+             },*/
+
+
+            /**
              * Include vendor css files globally without parsing them.
              */
             {
                 test: /\.css$/,
                 include: path.join(__dirname, 'node_modules'),
-               // exclude: path.join(__dirname, 'node_modules/font-awesome'),
+                // exclude: path.join(__dirname, 'node_modules/font-awesome'),
                 use: [
                     'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                           //import: false,
-                           // url: false
+                            //import: false,
+                            // url: false
                         }
 
                     }
@@ -97,17 +97,29 @@ module.exports = {
                         options: {
                             modules: true,
                             namedExport: true,
-                            camelCase:true
+                            camelCase: true
                         }
                     }
                 ]
             },
 
-            { test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]' },
-            { test: /\.woff$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff&name=public/fonts/[name].[ext]' },
-            { test: /\.woff2$/, loader: 'url-loader?limit=2000000&mimetype=application/font-woff2&name=public/fonts/[name].[ext]' },
-            { test: /\.[ot]tf$/, loader: 'url-loader?limit=2000000&mimetype=application/octet-stream&name=public/fonts/[name].[ext]' },
-            { test: /\.eot$/, loader: 'url-loader?limit=2000000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[name].[ext]' }
+            {test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]'},
+            {
+                test: /\.woff$/,
+                loader: 'url-loader?limit=2000000&mimetype=application/font-woff&name=public/fonts/[name].[ext]'
+            },
+            {
+                test: /\.woff2$/,
+                loader: 'url-loader?limit=2000000&mimetype=application/font-woff2&name=public/fonts/[name].[ext]'
+            },
+            {
+                test: /\.[ot]tf$/,
+                loader: 'url-loader?limit=2000000&mimetype=application/octet-stream&name=public/fonts/[name].[ext]'
+            },
+            {
+                test: /\.eot$/,
+                loader: 'url-loader?limit=2000000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[name].[ext]'
+            }
         ]
     },
     plugins: [
@@ -122,18 +134,18 @@ module.exports = {
             template: './index.ejs'
         }),
         new BundleAnalyzerPlugin({
-            analyzerMode:"static",
-            openAnalyzer:false
+            analyzerMode: "static",
+            openAnalyzer: false
         }),
         //TODO use below or check out HtmlWebpackPlugin options minify
-     /*   new Webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            minimize: true
-        })*/
+        /*   new Webpack.optimize.UglifyJsPlugin({
+               include: /\.min\.js$/,
+               minimize: true
+           })*/
 
-     new FileList(),
-        new ExplorerPlugin(),
-      new StatsDump()
+       // new FileList(),
+       // new ExplorerPlugin(),
+       // new StatsDump()
 
 
     ],

@@ -1,3 +1,11 @@
+/**
+ * TODO this might become a custom plugin
+ * as of now it only was a test to check wheather font awesome css files where touched by the compiler/loader
+ *
+ * @constructor
+ */
+
+
 function ExplorerPlugin() {}
 
 ExplorerPlugin.prototype.apply = function(compiler) {
