@@ -31,18 +31,36 @@ module.exports = {
     module: {
         rules: [
             {test: /\.tsx?$/, loader: 'ts-loader'},
-           /* {
+           /*{
 
                 test: /font-awesome\.css$/,
-                include: [path.join(__dirname, 'node_modules/font-awesome')],
+                include: [
+                       path.resolve(__dirname, 'node_modules/font-awesome')
+                ],
                 use: [
-                    'to-string-loader',
-                    { loader: 'css-loader', options: { importLoaders: 1 } },
-                    'postcss-loader'
+                    {
+                        loader: 'isomorphic-style-loader',
+                        options: {
+                            //insertInto: '#host>#root'
+                        }
+                    },
+                    {
+                        loader: 'typings-for-css-modules-loader',
+                        options: {
+                            modules: true,
+                            namedExport: true,
+                            camelCase:true
+                        }
+                    }
+                   // "style-loader",//'to-string-loader',
+                   // { loader: 'css-loader', options: { importLoaders: 1 } },
+                   // 'postcss-loader'
                 ]
 
 
             },*/
+
+
            /**
              * Include vendor css files globally without parsing them.
              */
