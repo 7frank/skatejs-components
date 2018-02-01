@@ -3,7 +3,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WpPluginWatchOffset = require('wp-plugin-watch-offset');
 
-const StatsDump = require('./StatsPlugin');
+const StatsDump = require('./webpack/plugins/StatsPlugin');
+const FileList = require('./webpack/plugins/FileListPlugin');
+const ExplorerPlugin = require('./webpack/plugins/ExplorerPlugin');
 
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -110,7 +112,11 @@ module.exports = {
             include: /\.min\.js$/,
             minimize: true
         })*/
-       StatsDump
+
+     new FileList(),
+        new ExplorerPlugin(),
+      new StatsDump()
+
 
     ],
     devtool: "inline-source-map",
