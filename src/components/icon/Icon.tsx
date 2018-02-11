@@ -5,6 +5,8 @@
 import 'skatejs-web-components';
 import {Component, h, prop, props} from 'skatejs';
 
+
+
 import * as styles from "./icon.css"
 
 import * as _ from "lodash"
@@ -24,23 +26,22 @@ import * as _ from "lodash"
  */
 
 
-
 //import   "font-awesome/css/font-awesome.css";
 //import  * as fa from  "font-awesome/css/font-awesome.css";
-import  * as  fa from  "./font-awesome/css/font-awesome.css";
+import * as  fa from "./font-awesome/css/font-awesome.css";
+import {IndexedComponent} from "../IndexedComponent";
 
 /*  manually inserting a style tag for "fa" to at least decrease the package size a bit for now */
 document.addEventListener("DOMContentLoaded", function () {
 
 
-
-    var css:any=fa;
-    var css =css._getCss()
-      var   head = document.head || document.getElementsByTagName('head')[0],
-       style:any = document.createElement('style');
+    var css: any = fa;
+    var css = css._getCss()
+    var head = document.head || document.getElementsByTagName('head')[0],
+        style: any = document.createElement('style');
 
     style.type = 'text/css';
-    if (style.styleSheet){
+    if (style.styleSheet) {
         style.styleSheet.cssText = css;
     } else {
         style.appendChild(document.createTextNode(css));
@@ -63,10 +64,13 @@ export interface IconProps {
     pulse?: boolean,
     stack?: '1x' | '2x',
     inverse?: boolean,
+    color: string
 };
 
 
-export default class Icon extends Component<IconProps> {
+
+
+export default class Icon extends IndexedComponent<IconProps> {
     label: string;
     name: string;
     size: string;
@@ -78,6 +82,7 @@ export default class Icon extends Component<IconProps> {
     inverse: string;
     pulse: string;
     className: string;
+    color: string
 
     static get is() {
         return 'nk-icon'
@@ -96,6 +101,7 @@ export default class Icon extends Component<IconProps> {
             inverse: prop.string({attribute: true}),
             pulse: prop.string({attribute: true}),
             className: prop.string({attribute: true}),
+            color: prop.string({attribute: true}),
         }
     }
 
@@ -103,18 +109,17 @@ export default class Icon extends Component<IconProps> {
     renderCallback() {
 
 
-      var iconName= "fa"+   _.map(this.name.split('-'), (w) => _.capitalize(w.toLowerCase())).join('');
+        var iconName = "fa" + _.map(this.name.split('-'), (w) => _.capitalize(w.toLowerCase())).join('');
 
 
-       if (!fa[ iconName]){
-           console.warn("fa-"+this.name,"not defined in icon pack 'font-awesome@4.7.0'")
-           return
-       }
+        if (!fa[iconName]) {
+            console.warn("fa-" + this.name, "not defined in icon pack 'font-awesome@4.7.0'")
+            return
+        }
 
 
-
-      //  let classNames = `fa fa-${this.name}`;
-        let classNames =""+fa.fa+" "+fa[ iconName];
+        //  let classNames = `fa fa-${this.name}`;
+        let classNames = "" + fa.fa + " " + fa[iconName];
 
 
         //TODO alter code below so it will find the classes again
@@ -151,14 +156,23 @@ export default class Icon extends Component<IconProps> {
 
         classNames += " " + styles.resetHeight.toString();
 
-        var css:any=fa;
+        var css: any = fa;
 
 
-        //{...props}
-        return <div className={classNames}><style>{css._getCss()}</style></div>;
+        return <div id="self" className={classNames}>
+            <style>{css._getCss()}</style>
+        </div>;
+
+
+    }
+
+    renderedCallback() {
+        super.renderedCallback()
+        this.ids.self.style.color = this.color;
 
 
     }
 }
+
 
 customElements.define(Icon.is, Icon);

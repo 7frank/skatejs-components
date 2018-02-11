@@ -61,7 +61,7 @@ export class HotkeyDialog extends NkWindow {
 
             this.style.display = d == "none" ? "" : "none"
 
-        }.bind(this), )
+        }.bind(this) )
 
     }
 
@@ -80,6 +80,25 @@ export class HotkeyDialog extends NkWindow {
         return super.renderCallback( [<style>{css._getCss()}</style>,<nk-hotkey-list id="hotkeys"></nk-hotkey-list>])
 
     }
+
+
+    /**
+     * pauses bound actions from triggering when combo is hit
+     */
+    pause() {
+        var hkList: HotkeyList = this.shadowRoot.querySelector("#hotkeys")
+        hkList.pause()
+    }
+
+    /**
+     * resumes triggering bound actions   when combo is hit
+     */
+    unpause() {
+        var hkList: HotkeyList = this.shadowRoot.querySelector("#hotkeys")
+        hkList.unpause()
+
+    }
+
 }
 
 customElements.define(HotkeyDialog.is, HotkeyDialog);

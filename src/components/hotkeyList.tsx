@@ -149,9 +149,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
     renderCallback() {
 
         Hotkeys.onChange(function () {
-
             this.rendererCallback()
-
         }.bind(this));
 
 
@@ -170,7 +168,9 @@ export class HotkeyList extends Component<HotkeyListProps> {
          */
         var createInputItem = (t, key, action) => {
 
-            var icon = "fa-keyboard-o";
+            var iconTypes = {keyboard:"keyboard-o"};
+            var icon=iconTypes[t.type]
+            if (!icon) icon ="question"
 
             //TODO evaluate keyboard/mouse/touch/gestures there might be more options and a plugin system could help etc.
 
@@ -178,9 +178,11 @@ export class HotkeyList extends Component<HotkeyListProps> {
             return <div class={styles.inputWrapper}>
                 <input value={t.combo} disabled={t.locked ? true : false}
                        onkeydown={(evt) => onInputPress.bind(this)(evt, key, action)}
-                       className={(t.error) ? styles.error : ""}
                        title={(t.error) ? t.error : ""}></input>
-                <label class={"fa " + icon + " " + styles.inputIcon}></label>
+                {(!t.error) ?<nk-icon class={styles.inputIcon} name={icon} ></nk-icon> :  <nk-icon class={styles.inputIcon} color={"yellow"} name={"exclamation-triangle"} ></nk-icon>}
+
+
+
             </div>;
         }
 
@@ -259,6 +261,27 @@ export class HotkeyList extends Component<HotkeyListProps> {
             <div>{this.label}</div>
             {tagSections}</div>
     }
+
+    /**
+     * pauses bound actions from triggering when combo is hit
+     */
+
+  pause() {
+      _.values(getRegistered()).forEach(function(item){ if (item.el && item.el.pause) item.el.pause()})
+
+    }
+
+    /**
+     * resumes triggering bound actions   when combo is hit
+     */
+    unpause() {
+        _.values(getRegistered()).forEach(function(item){ if (item.el && item.el.unpause) item.el.unpause()})
+
+    }
+
+
+
+
 }
 
 /**
