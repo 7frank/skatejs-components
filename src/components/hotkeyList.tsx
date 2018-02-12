@@ -107,6 +107,15 @@ function onInputPress(event, id:number, action:string) {
 
 }
 
+/**
+ *
+ * FIXME defined combos like + and # will mal to / and ' so they wont work as expected .. find a way for internationalisation
+ *  or map the intended key to the keyboard layout selected as this will differ from user to user
+ *
+ *
+ */
+
+
 export class HotkeyList extends Component<HotkeyListProps> {
     label: string;
     entries: object[];
