@@ -26,14 +26,14 @@ import * as _ from "lodash"
  */
 
 
-//import   "font-awesome/css/font-awesome.css";
+import   "font-awesome/css/font-awesome.css";
 //import  * as fa from  "font-awesome/css/font-awesome.css";
 import * as  fa from "./font-awesome/css/font-awesome.css";
 import {IndexedComponent} from "../IndexedComponent";
 
 /*  manually inserting a style tag for "fa" to at least decrease the package size a bit for now */
+/*
 document.addEventListener("DOMContentLoaded", function () {
-
 
     var css: any = fa;
     var css = css._getCss()
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     head.appendChild(style);
 });
-
+*/
 
 //import PropTypes from 'prop-types';
 
@@ -158,7 +158,7 @@ export default class Icon extends IndexedComponent<IconProps> {
 
         var css: any = fa;
 
-
+//FIXME chrome icons no longer show up.. error is somewhere on the line of shadow dom encapsulation
         return <div id="self" className={classNames}>
             <style>{css._getCss()}</style>
         </div>;
