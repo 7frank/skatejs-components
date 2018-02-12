@@ -1,6 +1,5 @@
 import 'skatejs-web-components';
 import {Component, h, prop, props, emit} from 'skatejs';
-import * as keycode from "keycode"
 
 import * as styles from './hotkeyList.css'
 
@@ -16,13 +15,12 @@ import {
 } from "@nk/keyboard-interactions"
 
 
+import * as event2stringProto from 'key-event-to-string';
 
 
-
-export interface ICombo
-{
+export interface ICombo {
     combo: string;
-    type?:string;
+    type?: string;
     stopPropagation: boolean;
     preventDefault: boolean;
     error: string;
@@ -39,10 +37,12 @@ export interface ICombo
 
 
 export interface IOptions {
-    combo:ICombo[]|string|string[];
+    combo: ICombo[] | string | string[];
     action: string;
     title?: string;
+
     handler(): any;
+
     category?: string;
     description?: string;
     selector?: string;
@@ -66,36 +66,60 @@ enum DetailMode {
 
 const DetailModeProp = prop.create<DetailMode>({});
 
-
-function onInputPress(event, id:number, action:string) {
+//TODO split and refactor .. the event to string part should probably be put into the interactionss library as it is closer logically
+function onInputPress(event, id: number, action: string) {
 
     event.preventDefault();
+    event.stopPropagation();
 
-    if (event.keyCode >= 16 && event.keyCode <= 18) return;
+    let details = event2stringProto.details(event)
 
 
-    var c=null;
-    var code=event.keyCode||event.which;
-    if (event.keyCode)
-    c = keycode.names[code];
+    var c = null;
 
-    if (!c && event.key)
-        c = event.key
+    if (details.hasKey) {
 
-    if (!c) console.warn("keyboard event: could not detect key")
+        //use KeydownEvent.key as it is the currently suggested way
+        if (!c && event.key)
+            c = event.key
 
+        //making the best of it for legacy support
+        if (!c) {
+            console.warn("missing feature: KeydownEvent.key - using backup for older browsers. This might fail with some special characters on non US keyboards.")
+            c = details.map.character
+        }
+
+        //should never happen
+        if (!c)
+        {
+            console.warn("keyboard event: could not detect key")
+        }
+if (c=="+") c="Plus"
+
+
+}
+
+    // modifiers to string
+    var d="";
     if (event.shiftKey == true)
-        c = "Shift+" + c;
+        d = "Shift+" + d;
     if (event.altKey == true)
-        c = "Alt+" + c;
+        d = "Alt+" + d;
     if (event.ctrlKey == true)
-        c = "Ctrl+" + c;
+        d = "Ctrl+" + d;
     if (event.metaKey == true)
-        c = "Meta+" + c;
+        d = "Meta+" + d;
 
+    //merge character and modifiers
+   if (c)
+   c= d+c;
+    else
+   c=d.slice(0, -1);
 
+    //write result into input element
     event.target.value = c;
 
+    //re-bind result
     if (!isBound(c)) {
 
         rebind(action, id, c);
@@ -108,10 +132,8 @@ function onInputPress(event, id:number, action:string) {
 }
 
 /**
- *
- * FIXME defined combos like + and # will mal to / and ' so they wont work as expected .. find a way for internationalisation
- *  or map the intended key to the keyboard layout selected as this will differ from user to user
- *
+ * Note: mappings for special chars may fail due to 'I18n'
+ * TODO bind special char +
  *
  */
 
@@ -133,7 +155,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
         }
     }
 
-    resetActions(action:string):void {
+    resetActions(action: string): void {
 
         resetActionCombosToDefault(action)
 
@@ -141,7 +163,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
     }
 
 
-    addComboForAction(action:string):void {
+    addComboForAction(action: string): void {
 
         addComboForAction(action)
 
@@ -177,9 +199,9 @@ export class HotkeyList extends Component<HotkeyListProps> {
          */
         var createInputItem = (t, key, action) => {
 
-            var iconTypes = {keyboard:"keyboard-o"};
-            var icon=iconTypes[t.type]
-            if (!icon) icon ="question"
+            var iconTypes = {keyboard: "keyboard-o"};
+            var icon = iconTypes[t.type]
+            if (!icon) icon = "question"
 
             //TODO evaluate keyboard/mouse/touch/gestures there might be more options and a plugin system could help etc.
 
@@ -188,8 +210,8 @@ export class HotkeyList extends Component<HotkeyListProps> {
                 <input value={t.combo} disabled={t.locked ? true : false}
                        onkeydown={(evt) => onInputPress.bind(this)(evt, key, action)}
                        title={(t.error) ? t.error : ""}></input>
-                {(!t.error) ?<nk-icon class={styles.inputIcon} name={icon} ></nk-icon> :  <nk-icon class={styles.inputIcon} color={"yellow"} name={"exclamation-triangle"} ></nk-icon>}
-
+                {(!t.error) ? <nk-icon class={styles.inputIcon} name={icon}></nk-icon> :
+                    <nk-icon class={styles.inputIcon} color={"yellow"} name={"exclamation-triangle"}></nk-icon>}
 
 
             </div>;
@@ -263,10 +285,10 @@ export class HotkeyList extends Component<HotkeyListProps> {
         const tagSections = _.values(_.mapValues(tagGroups, createSection));
 
 
+        var css: any = styles
 
-        var css:any=styles
-
-        return <div class={styles.list}> <style>{css._getCss()}</style>
+        return <div class={styles.list}>
+            <style>{css._getCss()}</style>
             <div>{this.label}</div>
             {tagSections}</div>
     }
@@ -275,8 +297,10 @@ export class HotkeyList extends Component<HotkeyListProps> {
      * pauses bound actions from triggering when combo is hit
      */
 
-  pause() {
-      _.values(getRegistered()).forEach(function(item){ if (item.el && item.el.pause) item.el.pause()})
+    pause() {
+        _.values(getRegistered()).forEach(function (item) {
+            if (item.el && item.el.pause) item.el.pause()
+        })
 
     }
 
@@ -284,11 +308,11 @@ export class HotkeyList extends Component<HotkeyListProps> {
      * resumes triggering bound actions   when combo is hit
      */
     unpause() {
-        _.values(getRegistered()).forEach(function(item){ if (item.el && item.el.unpause) item.el.unpause()})
+        _.values(getRegistered()).forEach(function (item) {
+            if (item.el && item.el.unpause) item.el.unpause()
+        })
 
     }
-
-
 
 
 }
