@@ -10,6 +10,7 @@ import {
     Hotkeys,
     isBound,
     rebind,
+    getActionByName,
     resetActionCombosToDefault,
     addComboForAction
 } from "@nk/keyboard-interactions"
@@ -90,17 +91,16 @@ function onInputPress(event, id: number, action: string) {
         }
 
         //should never happen
-        if (!c)
-        {
+        if (!c) {
             console.warn("keyboard event: could not detect key")
         }
-if (c=="+") c="Plus"
+        if (c == "+") c = "Plus"
 
 
-}
+    }
 
     // modifiers to string
-    var d="";
+    var d = "";
     if (event.shiftKey == true)
         d = "Shift+" + d;
     if (event.altKey == true)
@@ -111,10 +111,10 @@ if (c=="+") c="Plus"
         d = "Meta+" + d;
 
     //merge character and modifiers
-   if (c)
-   c= d+c;
+    if (c)
+        c = d + c;
     else
-   c=d.slice(0, -1);
+        c = d.slice(0, -1);
 
     //write result into input element
     event.target.value = c;
@@ -192,26 +192,125 @@ export class HotkeyList extends Component<HotkeyListProps> {
         /**
          * creates a single input element.
          *
-         * @param t
-         * @param key
+         * @param {object} t - A configuration object.
+         * @param {string} t.combo - A key combo.
+         * @param {boolean} t.locked - Wheather the combo can be edited/removed or is fixed/locked.
+         * @param keyID - the key or id within its parent(action) array (to be able to bind multiple combos to one action)
          * @param action
          * @returns {any}
          */
-        var createInputItem = (t, key, action) => {
+        var createInputItem = (t, keyID, action) => {
 
             var iconTypes = {keyboard: "keyboard-o"};
             var icon = iconTypes[t.type]
             if (!icon) icon = "question"
 
-            //TODO evaluate keyboard/mouse/touch/gestures there might be more options and a plugin system could help etc.
-
-
             return <div class={styles.inputWrapper}>
                 <input value={t.combo} disabled={t.locked ? true : false}
-                       onkeydown={(evt) => onInputPress.bind(this)(evt, key, action)}
+                       onkeydown={(evt) => onInputPress.bind(this)(evt, keyID, action)}
                        title={(t.error) ? t.error : ""}></input>
                 {(!t.error) ? <nk-icon class={styles.inputIcon} name={icon}></nk-icon> :
                     <nk-icon class={styles.inputIcon} color={"yellow"} name={"exclamation-triangle"}></nk-icon>}
+
+
+            </div>;
+        }
+
+
+        /**
+         * creates an input element that generates a input field for "humaninput"
+         *    TODO evaluate keyboard/mouse/touch/gestures with "humaninput"
+         * @param {object} t - A configuration object.
+         * @param {string} t.combo - A key combo.
+         * @param {boolean} t.locked - Wheather the combo can be edited/removed or is fixed/locked.
+         * @param keyID - the key or id within its parent(action) array (to be able to bind multiple combos to one action)
+         * @param action
+         * @returns {any}
+         */
+        var createInputItemAlt = (t, keyID, action) => {
+            var mInputID="m-hotkey-input-id"
+
+            var opt = getActionByName(action);
+
+            //TODO elements get re-rendered a lot on initialization
+           // console.log(opt)
+
+            var HI=opt.el._instance
+            if (!HI.startRecording) console.error("createInputItemAlt needs a proper instance of humaninput see: %c npm search humaninput", 'color: #bada55')
+
+
+
+            //helper
+            function updateInputField(evt, key, action)
+            {
+                var allEvents = HI.stopRecording();
+                console.log("event-sequence",allEvents)
+                //write result into input element
+                evt.target.value = allEvents;
+            }
+
+
+            //as soon as input field is focused start tracking
+            var mInterval;
+            var that;
+            var filter;//for textarea to work
+            function onFocus(evt, key, action)
+            {
+                that=this;
+                //backup filter
+                filter=HI.filter
+                HI.filter = (e) => { return true }
+
+
+
+                HI.startRecording();
+
+                //every now and then update the view.. to get the current combo
+                mInterval=setInterval(function(){
+
+                    updateInputField(evt, key, action)
+
+                },1000)
+
+
+            }
+
+
+            //on input blur finalize the combo
+            function onBlur(evt, key, action)
+            {
+                var allEvents = HI.stopRecording();
+                clearInterval(mInterval)
+                //restore filter
+                HI.filter=filter
+
+
+                //re-bind result
+             /*   if (!isBound(allEvents)) {
+
+                    rebind(action, keyID, allEvents);
+
+                    that.rendererCallback()
+                }*/
+
+
+            }
+
+
+
+            var iconTypes = {keyboard: "keyboard-o"};
+            var icon = iconTypes[t.type]
+            if (!icon) icon = "question"
+
+
+
+            return <div class={styles.inputWrapper}>
+                <input class={mInputID} value={t.combo} disabled={t.locked ? true : false}
+                       onfocus={(evt) => onFocus.bind(this)(evt, keyID, action)}
+                       onblur={(evt) => onBlur.bind(this)(evt, keyID, action)}
+                       title={(t.error) ? t.error : ""}></input>
+                {(!t.error) ? <nk-icon class={styles.inputIcon} name={icon}></nk-icon> :
+                    <nk-icon class={styles.inputIcon} color={"orange"} name={"exclamation-triangle"}></nk-icon>}
 
 
             </div>;
@@ -231,7 +330,8 @@ export class HotkeyList extends Component<HotkeyListProps> {
         var createRow = t => {
 
 
-            var item = t.combo.map((tag, key) => createInputItem(tag, key, t.action));
+            //var item = t.combo.map((tag, key) => createInputItem(tag, key, t.action));
+            var item = t.combo.map((tag, key) => createInputItemAlt(tag, key, t.action));
 
 
             return <div class={styles.row}>

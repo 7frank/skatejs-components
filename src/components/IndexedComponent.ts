@@ -41,7 +41,7 @@ function createStyleTag(css){
 
 
 /**
- * he indexed component contains an ids attribute which holds a reference to all elements within the shadow dom that own a property "id"
+ * The indexed component contains an 'ids' - attribute which holds a reference to all elements within the shadow dom that own a property "id"
  *
  */
 
