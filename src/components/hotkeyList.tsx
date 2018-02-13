@@ -124,7 +124,7 @@ function onInputPress(event, id: number, action: string) {
 
         rebind(action, id, c);
 
-        this.rendererCallback()
+       // this.rendererCallback()
     }
 
     return false;
@@ -179,9 +179,9 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
     renderCallback() {
 
-        Hotkeys.onChange(function () {
+        Hotkeys.onChange(_.throttle(function () {
             this.rendererCallback()
-        }.bind(this));
+        }.bind(this),50));
 
 
         //-------------------------
@@ -335,7 +335,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
 
 
             return <div class={styles.row}>
-                <span class={styles.action}>{t.action}</span>
+                <span title={t.action} class={styles.action}>{t.title}</span>
                 <div>{item}
                     <button class={styles.addEntry} onclick={() => this.addComboForAction(t.action)}>
                         <nk-icon name="plus"></nk-icon>
