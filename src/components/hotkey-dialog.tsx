@@ -71,7 +71,7 @@ export class HotkeyDialog extends NkWindow {
 
     addHotkeys(...args)
     {
-        console.log(this,args)
+
        var  hkList:HotkeyList = this.shadowRoot.querySelector('#hotkeys');
         return hkList.addHotkeys(...args)
     }

@@ -17,6 +17,7 @@ import {
 
 
 import * as event2stringProto from 'key-event-to-string';
+import {createDialog, getElementFromEvent} from "./hotkey-list-input-helper";
 
 
 export interface ICombo {
@@ -75,7 +76,6 @@ function onInputPress(event, id: number, action: string) {
 
     let details = event2stringProto.details(event)
 
-
     var c = null;
 
     if (details.hasKey) {
@@ -117,14 +117,21 @@ function onInputPress(event, id: number, action: string) {
         c = d.slice(0, -1);
 
     //write result into input element
-    event.target.value = c;
+   //TODO this didn't do anything in chrome because the event retargeting of the shadowdom interferes
+    //but we clearly should have native access other than checking for  e.currentTarget ||  (e.path && e.path[0])
+    //this is only a problem for when the dshadow dom is working in one browser and not being used in another
+    //also the input iof our hotkey component doesnt work as intended with humaninput pluging start/stoprecording
+
+    getElementFromEvent(event).value = c;
 
     //re-bind result
+
     if (!isBound(c)) {
+
 
         rebind(action, id, c);
 
-       // this.rendererCallback()
+        this.rendererCallback()
     }
 
     return false;
@@ -244,9 +251,9 @@ export class HotkeyList extends Component<HotkeyListProps> {
             function updateInputField(evt, key, action)
             {
                 var allEvents = HI.stopRecording();
-                console.log("event-sequence",allEvents)
+                console.log("event-sequence", evt,[allEvents])
                 //write result into input element
-                evt.target.value = allEvents;
+                evt.target.value = allEvents.join(" ");
             }
 
 
@@ -261,7 +268,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
                 filter=HI.filter
                 HI.filter = (e) => { return true }
 
-
+                console.log("target",evt)
 
                 HI.startRecording();
 
@@ -271,6 +278,24 @@ export class HotkeyList extends Component<HotkeyListProps> {
                     updateInputField(evt, key, action)
 
                 },1000)
+
+
+            }
+
+            function onClickTest(evt)
+            {
+                evt.stopPropagation()
+
+                console.log("onClickTest",evt)
+
+                createDialog(opt).then(function(sequence){
+
+                  var textarea=  getElementFromEvent(evt)
+
+                    textarea.value = sequence;
+                  console.log("new key sequence",sequence,textarea)
+
+                })
 
 
             }
@@ -303,12 +328,17 @@ export class HotkeyList extends Component<HotkeyListProps> {
             if (!icon) icon = "question"
 
 
-
+    /*
+        onfocus={(evt) => onFocus.bind(this)(evt, keyID, action)}
+                        onblur={(evt) => onBlur.bind(this)(evt, keyID, action)}
+                        */
             return <div class={styles.inputWrapper}>
+
                 <input class={mInputID} value={t.combo} disabled={t.locked ? true : false}
-                       onfocus={(evt) => onFocus.bind(this)(evt, keyID, action)}
-                       onblur={(evt) => onBlur.bind(this)(evt, keyID, action)}
+                       onclick={onClickTest}
+
                        title={(t.error) ? t.error : ""}></input>
+
                 {(!t.error) ? <nk-icon class={styles.inputIcon} name={icon}></nk-icon> :
                     <nk-icon class={styles.inputIcon} color={"orange"} name={"exclamation-triangle"}></nk-icon>}
 
@@ -330,8 +360,8 @@ export class HotkeyList extends Component<HotkeyListProps> {
         var createRow = t => {
 
 
-            //var item = t.combo.map((tag, key) => createInputItem(tag, key, t.action));
-            var item = t.combo.map((tag, key) => createInputItemAlt(tag, key, t.action));
+            var item = t.combo.map((tag, key) => createInputItem(tag, key, t.action));
+           // var item = t.combo.map((tag, key) => createInputItemAlt(tag, key, t.action));
 
 
             return <div class={styles.row}>

@@ -28,8 +28,9 @@ This library contains a simple wrapper for *different* input methods. By introdu
         * like node_modules/*.css and src/*.css 
         * global includes and local includes for shadow dom
     * the current implementation is working but rather less fancy 
-    
-    
+* a mapping component that defines mappings from device buttons or events to actions, compare both approaches
+    * https://github.com/fernandojsg/aframe-input-mapping-component    
+    * not as customizable but might have some useful ideas
     
     
 

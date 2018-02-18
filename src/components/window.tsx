@@ -271,6 +271,11 @@ export class NkWindow extends Component<WindowProps> {
 
     bringToFront(e) {
 
+        if (!this.parentNode)
+        {
+            console.warn("can't 'bringToFront' not attached to dom")
+            return
+        }
 
         var queryResult = document.querySelectorAll("[focused]");
 

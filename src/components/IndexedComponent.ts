@@ -50,8 +50,6 @@ export class IndexedComponent<T> extends Component<T> implements IndexedComponen
     css: string;
     constructor() {
         super();
-
-
     }
 
 
