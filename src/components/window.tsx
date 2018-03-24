@@ -315,7 +315,7 @@ export class NkWindow extends Component<WindowProps> {
                                onclick={this.closeWindow.bind(this)}></nk-icon>
                 </span>
             </div>
-            <div ss-container class={styles.body}>{el}
+            <div ss-container >{el}
                 <slot class={styles.body}>{this.caption}</slot>
             </div>
 
