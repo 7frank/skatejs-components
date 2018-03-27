@@ -31,7 +31,8 @@ This library contains a simple wrapper for *different* input methods. By introdu
 * a mapping component that defines mappings from device buttons or events to actions, compare both approaches
     * https://github.com/fernandojsg/aframe-input-mapping-component    
     * not as customizable but might have some useful ideas
-    
+
+* dropped the icons for now as they don't align well with shadowDom and webpack    
     
 
 

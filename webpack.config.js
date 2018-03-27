@@ -6,7 +6,7 @@ const WpPluginWatchOffset = require('wp-plugin-watch-offset');
 const StatsDump = require('./webpack/plugins/StatsPlugin');
 const FileList = require('./webpack/plugins/FileListPlugin');
 const ExplorerPlugin = require('./webpack/plugins/ExplorerPlugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
@@ -103,7 +103,7 @@ module.exports = {
                 ]
             },
 
-            {test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]'},
+          /*  {test: /\.svg$/, loader: 'url-loader?limit=2000000&mimetype=image/svg+xml&name=public/fonts/[name].[ext]'},
             {
                 test: /\.woff$/,
                 loader: 'url-loader?limit=2000000&mimetype=application/font-woff&name=public/fonts/[name].[ext]'
@@ -119,7 +119,7 @@ module.exports = {
             {
                 test: /\.eot$/,
                 loader: 'url-loader?limit=2000000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[name].[ext]'
-            }
+            }*/
         ]
     },
     plugins: [
@@ -147,6 +147,10 @@ module.exports = {
        // new ExplorerPlugin(),
        // new StatsDump()
 
+        new CopyWebpackPlugin([
+            {from: 'node_modules/font-awesome/fonts', to: 'assets/fa/fonts'},
+            {from: 'node_modules/font-awesome/css', to: 'assets/fa/css'}
+        ])
 
     ],
     devtool: "inline-source-map",

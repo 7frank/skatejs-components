@@ -19,7 +19,7 @@ import "jquery.scrollbar"
 import PerfectScrollbar from 'perfect-scrollbar';
 
 /**
-* TODO and another case of .. explicite declare, which we'd like to avoid. so for now a simple string instead of import,declare will do
+* TODO and another case of .. explicit declare, which we'd like to avoid. so for now a simple string instead of import,declare will do
  **/
 //import 'perfect-scrollbar/css/perfect-scrollbar.css';
 //import scrollbarCSS = require('./perfect-scrollbar.css.txt');

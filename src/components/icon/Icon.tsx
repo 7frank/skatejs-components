@@ -26,30 +26,12 @@ import * as _ from "lodash"
  */
 
 
-import   "font-awesome/css/font-awesome.css";
 //import  * as fa from  "font-awesome/css/font-awesome.css";
-import * as  fa from "./font-awesome/css/font-awesome.css";
+
+
+//import   "font-awesome/css/font-awesome.css";
+//import * as  fa from "./font-awesome/css/font-awesome.css";
 import {IndexedComponent} from "../IndexedComponent";
-
-/*  manually inserting a style tag for "fa" to at least decrease the package size a bit for now */
-/*
-document.addEventListener("DOMContentLoaded", function () {
-
-    var css: any = fa;
-    var css = css._getCss()
-    var head = document.head || document.getElementsByTagName('head')[0],
-        style: any = document.createElement('style');
-
-    style.type = 'text/css';
-    if (style.styleSheet) {
-        style.styleSheet.cssText = css;
-    } else {
-        style.appendChild(document.createTextNode(css));
-    }
-
-    head.appendChild(style);
-});
-*/
 
 //import PropTypes from 'prop-types';
 
@@ -109,17 +91,15 @@ export default class Icon extends IndexedComponent<IconProps> {
     renderCallback() {
 
 
-        var iconName = "fa" + _.map(this.name.split('-'), (w) => _.capitalize(w.toLowerCase())).join('');
-
-
+      /*  var iconName = "fa" + _.map(this.name.split('-'), (w) => _.capitalize(w.toLowerCase())).join('');
         if (!fa[iconName]) {
             console.warn("fa-" + this.name, "not defined in icon pack 'font-awesome@4.7.0'")
             return
         }
+    */
 
-
-        //  let classNames = `fa fa-${this.name}`;
-        let classNames = "" + fa.fa + " " + fa[iconName];
+          let classNames = `fa fa-${this.name}`;
+      //  let classNames = "" + fa.fa + " " + fa[iconName];
 
 
         //TODO alter code below so it will find the classes again
@@ -156,11 +136,15 @@ export default class Icon extends IndexedComponent<IconProps> {
 
         classNames += " " + styles.resetHeight.toString();
 
-        var css: any = fa;
+       // var css: any = fa;
 
+   //skip icons for now ... font awesome and webcomponents+ webpack are too much fuss right now
+// <style>{css._getCss()}</style>
 //FIXME chrome icons no longer show up.. error is somewhere on the line of shadow dom encapsulation
         return <div id="self" className={classNames}>
-            <style>{css._getCss()}</style>
+
+
+
         </div>;
 
 
