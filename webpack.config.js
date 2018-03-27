@@ -1,7 +1,7 @@
 const Webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WpPluginWatchOffset = require('wp-plugin-watch-offset');
+const WpPluginWatchOffset = require('@ff0000-ad-tech/wp-plugin-watch-offset');
 
 const StatsDump = require('./webpack/plugins/StatsPlugin');
 const FileList = require('./webpack/plugins/FileListPlugin');
