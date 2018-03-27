@@ -16,6 +16,11 @@ import {
 } from "@nk/keyboard-interactions"
 
 
+export {
+    HotkeyList as default, Hotkeys,
+};
+
+
 import * as event2stringProto from 'key-event-to-string';
 import {createDialog, getElementFromEvent} from "./hotkey-list-input-helper";
 

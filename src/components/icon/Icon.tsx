@@ -9,28 +9,22 @@ import {Component, h, prop, props} from 'skatejs';
 
 import * as styles from "./icon.css"
 
-import * as _ from "lodash"
-
 /**
  * ...some documentation for the issue with webpack and font-awesome
- * * the following code does partially work but with restrictions and future changes in mind
- * * the "module not defined" - error of typescript/webpack was due to the loader not creating proper typings
- * * this was prevented by using the existing loader for global scripts that is injecting them into the shadow dom
+ * the following code does partially work but with restrictions and future changes in mind
+ * the "module not defined" - error of typescript/webpack was due to the loader not creating proper typings
+ * this was prevented by using the existing loader for global scripts that is injecting them into the shadow dom
  *   and copying the font-awesome library under src/.. /icon for the laoder to find it.
  *   also a global  import still has to exist further increasing the bundle size
  *
- *   TODO find a way to remove the double import
+ *  NOTE: the font-face for fontawesome will have to be created by the package that uses it
+ *
+ *
  *   TODO create separate bundle for the icon imports
- *   TODO  might have performance implications as it is implemented now
  *
  */
 
 
-//import  * as fa from  "font-awesome/css/font-awesome.css";
-
-
-//import   "font-awesome/css/font-awesome.css";
-//import * as  fa from "./font-awesome/css/font-awesome.css";
 import {IndexedComponent} from "../IndexedComponent";
 
 //import PropTypes from 'prop-types';
@@ -91,13 +85,6 @@ export default class Icon extends IndexedComponent<IconProps> {
     renderCallback() {
 
 
-      /*  var iconName = "fa" + _.map(this.name.split('-'), (w) => _.capitalize(w.toLowerCase())).join('');
-        if (!fa[iconName]) {
-            console.warn("fa-" + this.name, "not defined in icon pack 'font-awesome@4.7.0'")
-            return
-        }
-    */
-
           let classNames = `fa fa-${this.name}`;
       //  let classNames = "" + fa.fa + " " + fa[iconName];
 
@@ -136,13 +123,14 @@ export default class Icon extends IndexedComponent<IconProps> {
 
         classNames += " " + styles.resetHeight.toString();
 
-       // var css: any = fa;
+        var cssLinks=`
+                @import url("assets/fa/css/font-awesome.min.css");
+        `
 
-   //skip icons for now ... font awesome and webcomponents+ webpack are too much fuss right now
-// <style>{css._getCss()}</style>
-//FIXME chrome icons no longer show up.. error is somewhere on the line of shadow dom encapsulation
         return <div id="self" className={classNames}>
-
+            <style>
+                @import url("assets/fa/css/font-awesome.min.css");
+            </style>
 
 
         </div>;

@@ -21,6 +21,10 @@ module.exports = {
 
         umdNamedDefine: true
     },
+    devServer: {
+        contentBase: path.resolve(__dirname, './dist')
+    },
+
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         alias: {
