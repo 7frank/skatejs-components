@@ -13,7 +13,7 @@ import {
     getActionByName,
     resetActionCombosToDefault,
     addComboForAction
-} from "@nk/keyboard-interactions"
+} from "@nk11/keyboard-interactions"
 
 
 export {
@@ -453,7 +453,7 @@ export class HotkeyList extends Component<HotkeyListProps> {
 }
 
 /**
- * {@link @nk/keyboard-interactions#Hotkeys()}
+ * {@link @nk11/keyboard-interactions#Hotkeys()}
  */
 export function addHotkeys(...args) {
     Hotkeys.apply(null, args);

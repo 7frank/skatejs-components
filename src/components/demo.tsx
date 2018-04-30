@@ -1,5 +1,5 @@
 import {addHotkeys, IOptions} from "./hotkeyList"
-import {logHotkeyList} from "@nk/keyboard-interactions"
+import {logHotkeyList} from "@nk11/keyboard-interactions"
 /*
 document.addEventListener("DOMContentLoaded", function () {
     addDemohandlers()
