@@ -1,6 +1,6 @@
 {
   "name": "@nk11/core-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "contains a set of basic web components",
   "main": "webpack.config.js",
   "scripts": {
@@ -54,5 +54,9 @@
     "resizable": "^1.2.0",
     "skatejs": "^4.6.7",
     "skatejs-web-components": "^0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/frank1147/skatejs-components.git"
   }
 }
