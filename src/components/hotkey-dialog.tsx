@@ -59,7 +59,10 @@ export class HotkeyDialog extends NkWindow {
         console.log("%cKey-Map %s", css, 'hit "'+this.defaultCombo+'" to trigger the configuration dialog');
 
         var hkList: HotkeyList = this.shadowRoot.querySelector("#hotkeys")
-        hkList.addHotkeys("Toggle Keymap Dialog.", [{combo:this.defaultCombo,locked: true}], function () {
+       var Hotkeys=hkList.getHotkeysInstance()
+        Hotkeys.register("Toggle Keymap Dialog.", [{combo:this.defaultCombo,locked: true}])
+
+        Hotkeys().on("Toggle Keymap Dialog.", function () {
 
             var d = this.style.display
 
@@ -69,12 +72,6 @@ export class HotkeyDialog extends NkWindow {
 
     }
 
-    addHotkeys(...args)
-    {
-
-       var  hkList:HotkeyList = this.shadowRoot.querySelector('#hotkeys');
-        return hkList.addHotkeys(...args)
-    }
 
     renderCallback() {
         var css:any=styles

@@ -91,13 +91,17 @@
         <script>
             function addHotkeyListener()
             {
-                NKCore.addHotkeys("action","ctrl+shift+space",console.warn)
+
+                var Hotkeys=NKCore.getHotkeysInstance()
+                Hotkeys.register("action","ctrl+shift+space")
+
+                Hotkeys().on("action",console.warn)
 
 
                 var hkList=document.querySelector("nk-hotkey-dialog")
 
-
-                hkList.addHotkeys("open dialog", "ctrl+space", function(){
+                Hotkeys.register("open dialog", "ctrl+space")
+                Hotkeys().on("open dialog", function(){
 
                     document.body.append(document.createElement("nk-window"))
                   //TODO below should work also.. or so it seems
@@ -107,8 +111,8 @@
                      </nk-window>
                   `)*/
                 })
-
-                hkList.addHotkeys("do something else", "ctrl+space", function(){
+                Hotkeys.register("do something else", "ctrl+x")
+                Hotkeys().on("do something else", function(){
                     alert("bla")
                 })
 

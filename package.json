@@ -1,6 +1,6 @@
 {
   "name": "@nk11/core-components",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "contains a set of basic web components",
   "main": "webpack.config.js",
   "scripts": {
@@ -15,8 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "@ff0000-ad-tech/wp-plugin-watch-offset": "^1.0.3",
-    "@nk11/keyboard-interactions": "^0.2.1",
-    "@types/jasmine": "^2.8.6",
+    "@nk11/keyboard-interactions": "^1.0.1",
+    "@types/jasmine": "^2.8.7",
     "@types/jquery": "^3.3.1",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
@@ -26,14 +26,14 @@
     "jasmine-core": "^2.99.1",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",
-    "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.1.0",
+    "karma-coverage": "^1.1.2",
+    "karma-jasmine": "^1.1.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.13",
     "less": "^2.7.3",
     "postcss-assets-rebase": "^0.4.0",
     "postcss-import": "^11.1.0",
-    "postcss-loader": "^2.1.4",
+    "postcss-loader": "^2.1.5",
     "style-loader": "^0.19.1",
     "to-string-loader": "^1.1.5",
     "ts-loader": "^2.3.7",
@@ -41,7 +41,7 @@
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^0.6.2",
     "webpack": "^2.4.1",
-    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-analyzer": "^2.11.3",
     "webpack-dev-server": "^2.11.2"
   },
   "dependencies": {

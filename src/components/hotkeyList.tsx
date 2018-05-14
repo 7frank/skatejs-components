@@ -184,8 +184,17 @@ export class HotkeyList extends Component<HotkeyListProps> {
     /**
      * @inheritDoc Hotkeys
      */
-    addHotkeys(...args) {
+   /* addHotkeys(...args) {
         Hotkeys.apply(null, args);
+    };*/
+
+    /**
+     * TODO find a better way to expose the hk instance
+     * @returns {any}
+     */
+
+    getHotkeysInstance() {
+        return Hotkeys
     };
 
 
@@ -455,8 +464,12 @@ export class HotkeyList extends Component<HotkeyListProps> {
 /**
  * {@link @nk11/keyboard-interactions#Hotkeys()}
  */
-export function addHotkeys(...args) {
+/*export function addHotkeys(...args) {
     Hotkeys.apply(null, args);
+};*/
+
+export function getHotkeysInstance() {
+    return Hotkeys
 };
 
 customElements.define(HotkeyList.is, HotkeyList);

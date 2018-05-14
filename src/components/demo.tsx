@@ -1,4 +1,4 @@
-import {addHotkeys, IOptions} from "./hotkeyList"
+import {Hotkeys, IOptions} from "./hotkeyList"
 import {logHotkeyList} from "@nk11/keyboard-interactions"
 /*
 document.addEventListener("DOMContentLoaded", function () {
@@ -44,8 +44,9 @@ export function addDemohandlers() {
 
 
   //  let demoTagsHelper :IOptions[] = demoTags
-    for (let entry of demoTags)
-       addHotkeys(entry.action, entry.combo, entry.handler, entry)
-
+    for (let entry of demoTags) {
+        Hotkeys.register(entry.action, entry.combo, entry)
+        Hotkeys().on(entry.action,entry.handler)
+    }
 }
 
