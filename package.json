@@ -1,6 +1,6 @@
 {
   "name": "@nk11/core-components",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "contains a set of basic web components",
   "main": "webpack.config.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@ff0000-ad-tech/wp-plugin-watch-offset": "^1.0.3",
-    "@nk11/keyboard-interactions": "^1.0.1",
+    "@nk11/keyboard-interactions": "^1.0.2",
     "@types/jasmine": "^2.8.7",
     "@types/jquery": "^3.3.1",
     "copy-webpack-plugin": "^4.5.1",
