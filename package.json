@@ -1,6 +1,6 @@
 {
   "name": "@nk11/core-components",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "contains a set of basic web components",
   "main": "webpack.config.js",
   "scripts": {
