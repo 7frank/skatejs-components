@@ -86,7 +86,7 @@ function onInputPress(event, id: number, action: string) {
     if (details.hasKey) {
 
         //use KeydownEvent.key as it is the currently suggested way
-        if (!c && event.key)
+        if (!c && event.key && details.map.character!="Space")
             c = event.key
 
         //making the best of it for legacy support
